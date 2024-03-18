@@ -5,7 +5,7 @@ mongoose.connect(`mongodb+srv://${process.env.user}:${process.env.password}@blog
 
 router.post('/login', (req, res, next) => {
     console.log(req.body)
-    res.status(201).json({ message: "OK" });
+    res.status(201).json({ message: "OK!" });
 });
 
 module.exports = router;
