@@ -59,7 +59,7 @@ router.post('/register', async (req, res, next) => {
             let data = new User({
                 _id: new mongoose.Types.ObjectId(),
                 email: req.body.email,
-                user_name: req.body.name,
+                name: req.body.name,
                 password: encryptedPassword,
                 about: req.body.about
             })

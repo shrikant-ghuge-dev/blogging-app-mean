@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/post')
+const userRoute = require('./routes/user')
 const commentRoute = require('./routes/comment')
 const categoryRoute = require('./routes/category')
 // To read the body from the requests
@@ -13,6 +14,7 @@ const { errorHandler } = require('./middlewares/errorMiddleware');
 
 // database
 connectToMongoDB();
+
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
@@ -25,9 +27,10 @@ app.use('/api/v1/auth', authRoute)
 
 app.use('/api/v1/post', allowGetWithoutAuth, postRoute)
 
+app.use('/api/v1/user', allowGetWithoutAuth, userRoute)
+
 app.use('/api/v1/category', allowGetWithoutAuth, categoryRoute)
 
 app.use(errorHandler);
 
 app.listen(process.env.PORT);
-

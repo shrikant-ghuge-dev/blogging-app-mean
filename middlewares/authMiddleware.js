@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 
 const allowGetWithoutAuth = (req, res, next) => {
-    console.log(req.originalUrl)
     if (req.method === 'GET') {
         // If it's a GET request, allow it to proceed without authentication
         return next();

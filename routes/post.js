@@ -27,7 +27,8 @@ router.post('/user/:userId/category/:categoryId/posts', (req, res, next) => {
 router.post('/:postId/comments', (req, res, next) => {
     const commentData = new Comment({
         comment: req.body.comment,
-        postId: req.params.postId
+        postId: req.params.postId,
+        userId: req.body.userId
     })
 
     commentData.save().then(response => {
@@ -104,7 +105,6 @@ router.delete('/:postId', (req, res) => {
 // Update post
 router.put('/:postId', (req, res, next) => {
     const postData = {
-        _id: req.params.postId,
         title: req.body.title,
         content: req.body.content,
         category: req.body.category,
