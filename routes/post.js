@@ -41,7 +41,7 @@ router.post('/:postId/comments', (req, res, next) => {
 
 // Get All posts
 router.get('/', (req, res) => {
-    Post.find().then(response => {
+    Post.find().populate("userId", "-password").populate("categoryId").select('-password').then(response => {
         return res.status(201).json({
             success: 1,
             data: response
@@ -51,13 +51,44 @@ router.get('/', (req, res) => {
 
 // Get post by postid
 router.get('/:postId', (req, res) => {
-    Post.find({ _id: req.params.postId }).then(response => {
-        return res.status(201).json({
-            success: 1,
-            data: response
+    Post.findById(req.params.postId)
+        .populate("userId", "-password")
+        .populate("categoryId")
+        .select('-password')
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({
+                    success: 0,
+                    message: "Post not found."
+                });
+            }
+
+            Comment.find({ postId: req.params.postId })
+                .then(comments => {
+                    return res.status(200).json({
+                        success: 1,
+                        data: {
+                            post: post,
+                            comments: comments
+                        }
+                    });
+                })
+                .catch(commentErr => {
+                    console.log(commentErr);
+                    return res.status(500).json({
+                        success: 0,
+                        message: "An error occurred while fetching comments."
+                    });
+                });
+        })
+        .catch(postErr => {
+            console.log(postErr);
+            return res.status(500).json({
+                success: 0,
+                message: "An error occurred while fetching post."
+            });
         });
-    }).catch(err => console.log(err))
-})
+});
 
 // Delete post
 router.delete('/:postId', (req, res) => {
@@ -72,7 +103,7 @@ router.delete('/:postId', (req, res) => {
 
 // Update post
 router.put('/:postId', (req, res, next) => {
-    const postData ={
+    const postData = {
         _id: req.params.postId,
         title: req.body.title,
         content: req.body.content,

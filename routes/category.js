@@ -20,4 +20,13 @@ router.post('/', (req, res) => {
 
 })
 
+router.get('/', (req, res) => {
+    Category.find({}).then(response => {
+        res.status(200).json({
+            success: 1,
+            data: response
+        })
+    }).catch(error => console.log(error))
+})
+
 module.exports = router;

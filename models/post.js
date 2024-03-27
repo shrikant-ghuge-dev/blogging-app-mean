@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema({
     content: { type: String, require: true },
     image: { type: String, require: true },
     category: { type: String, require: true },
+    createdAt: { type: Date, default: new Date()},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" }
 });
