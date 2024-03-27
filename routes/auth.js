@@ -9,7 +9,6 @@ const jwt = require('jsonwebtoken');
 const saltRounds = 10
 
 router.post('/login', async (req, res) => {
-    console.log(req.body)
     const { email, password } = req.body;
 
     try {
@@ -36,7 +35,6 @@ router.post('/login', async (req, res) => {
         return res.status(200).json({ success: 1, message: 'Login successful.', user: userData, token });
 
     } catch (error) {
-        console.error(error);
         return res.status(500).json({ success: 0, message: 'Internal server error.' });
     }
 });
@@ -74,7 +72,6 @@ router.post('/register', async (req, res, next) => {
             })
                 .catch(err => console.error(err.message))
         }).catch((error) => {
-            console.log("str", error)
             return res.status(500).send({ message: error.message });
         })
 });

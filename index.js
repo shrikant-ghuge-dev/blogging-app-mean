@@ -11,7 +11,6 @@ const connectToMongoDB = require('./helper/db');
 const { allowGetWithoutAuth } = require('./middlewares/authMiddleware');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 
-
 // database
 connectToMongoDB();
 app.use(bodyParser.json())
