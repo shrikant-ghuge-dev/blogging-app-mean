@@ -30,7 +30,7 @@ const protect = asyncHandler(async (req, res, next) => {
         }
     }
 
-    if (req.originalUrl == "/api/v1/auth/register" || req.originalUrl == "/api/v1/auth/login") {
+    if (req.originalUrl == "/api/v1/auth/register" || req.originalUrl == "/api/v1/auth/login" || req.originalUrl == "/api/v1/auth/forgot-password" || req.originalUrl == "/api/v1/auth/reset-password") {
         next()
     } else if (!token) {
         res.status(401)

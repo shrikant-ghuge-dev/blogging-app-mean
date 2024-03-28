@@ -5,6 +5,8 @@ let userSchema = new mongoose.Schema({
     password: { type: String, require: true },
     name: { type: String, require: true },
     about: { type: String, require: true },
+    resetToken: { type: String },
+    resetTokenExpiry: { type: Date }
 })
 
 module.exports = mongoose.model('users', userSchema)

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors')
 const express = require('express');
 const app = express();
 const authRoute = require('./routes/auth')
@@ -14,6 +15,8 @@ const { errorHandler } = require('./middlewares/errorMiddleware');
 
 // database
 connectToMongoDB();
+
+app.use(cors())
 
 app.use(bodyParser.json())
 
