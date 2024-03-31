@@ -3,14 +3,49 @@ const Post = require('../models/post');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Comment = require('../models/comment');
+// Image upload
+var multer = require("multer");
 
-router.post('/user/:userId/category/:categoryId/posts', (req, res, next) => {
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
+    filename: function (req, file, cb) {
+        // Get the current date and time
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+        const currentTime = currentDate.toTimeString().slice(0, 8).replace(/:/g, ''); // Format: HHMMSS
+        // Generate the new filename with date and time
+        const newFilename = `${formattedDate}_${currentTime}${file.originalname}`;
+        cb(null, newFilename);
+    }
+})
+var upload = multer({
+    storage: storage,
+    limits: {
+        // Setting Image Size Limit to 2MBs
+        fileSize: 2000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            //Error 
+            cb(new Error('Please upload JPG and PNG images only!'))
+        }
+        //Success 
+        cb(undefined, true)
+    }
+})
+
+router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), (req, res, next) => {
+    // Get the uploaded file information
+    const imagePath = req?.file?.path;
+
     const postData = new Post({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         content: req.body.content,
         category: req.body.category,
-        image: req.body.image,
+        image: imagePath,
         userId: req.params.userId,
         categoryId: req.params.categoryId
     })
@@ -21,7 +56,15 @@ router.post('/user/:userId/category/:categoryId/posts', (req, res, next) => {
             data: response
         });
     }).catch(err => console.log(err))
-})
+},
+    // multer Error Handling
+    (error, req, res, next) => {
+        console.log("str1", error);
+        next(res.status(400).send({
+            message: error.message
+        }))
+    }
+)
 
 
 router.post('/:postId/comments', (req, res, next) => {

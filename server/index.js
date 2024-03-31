@@ -20,6 +20,8 @@ app.use(cors())
 
 app.use(bodyParser.json())
 
+app.use(express.static('upload'))
+
 app.get('/', (req, res) => {
     res.json({ message: "test" })
 })

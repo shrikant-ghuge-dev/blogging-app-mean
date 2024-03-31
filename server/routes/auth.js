@@ -19,10 +19,8 @@ router.post('/login', async (req, res) => {
         if (!user) {
             return res.status(401).json({ success: 0, message: 'User with email not found!' });
         }
-
         // Compare passwords
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        console.log(isPasswordValid)
         if (!isPasswordValid) {
             return res.status(401).json({ success: 0, message: 'Invalid password!' });
         }
@@ -84,8 +82,6 @@ const passwordResetTokens = {};
 // Set up nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
-    // port: 2525,
-    // secure: true,
     auth: {
         user: 'shreeghuge1@gmail.com', // replace with your email
         pass: 'fhzo kruq myrm qlnh' // replace with your password
@@ -98,14 +94,12 @@ router.post('/forgot-password', async (req, res) => {
 
     // Find user by email (replace with your database query)
     const user = await User.find({ email });
-    console.log(user)
     if (!user) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
 
     // Generate and store reset token
     const token = generateToken();
-    console.log('User array:', user);
     // Assuming user is an array containing user objects
     for (const currentUser of user) {
         currentUser.resetToken = token;
@@ -149,7 +143,6 @@ router.post('/reset-password', async (req, res) => {
 
     // Find user by token (replace with your database query)
     const user = await findUserByToken(token);
-    console.log('------------', user, newPassword)
     if (!user) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
@@ -214,11 +207,13 @@ async function updateUserPassword(user, newPassword) {
             })
             .then(hash => {
                 encryptedPassword = hash
+                // Update the user's password
+                user.password = encryptedPassword;
+                return user.save();
+            }).then(savedUser => {
+                // Handle success or continue with further processing
+                console.log("User password updated:", savedUser);
             })
-
-        // Update the user's password
-        user.password = encryptedPassword;
-        await user.save();
     } catch (error) {
         console.error('Error updating user password:', error);
         throw error; // Re-throw the error for handling in the calling code
@@ -227,8 +222,8 @@ async function updateUserPassword(user, newPassword) {
 
 // Function to invalidate the token
 async function invalidateToken(token) {
-    await User.updateOne({ resetToken: token }, { $unset: { resetToken: 1, resetTokenExpiry: 1 } });
-}
+        await User.updateOne({ resetToken: token }, { $unset: { resetToken: 1, resetTokenExpiry: 1 } });
+    }
 
 
-module.exports = router;
+    module.exports = router;
