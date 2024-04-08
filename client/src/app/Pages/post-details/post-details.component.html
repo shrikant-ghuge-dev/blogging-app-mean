@@ -1,0 +1,45 @@
+<div class="container mx-auto">
+    <nav class="text-sm font-medium text-gray-500">
+        <a href="/" class="text-blue-500 hover:underline">Home</a> /
+        <span>title</span>
+    </nav>
+
+    <div class="mt-8">
+        <div class="md:w-full">
+            <div class="bg-white shadow-md p-6">
+                <p class="text-sm text-gray-600">Posted By <a href=""
+                        class="font-semibold text-blue-500 hover:underline">name</a> on <span
+                        class="font-semibold">addedDate</span></p>
+                <p class="text-sm text-gray-600">categoryTitle</p>
+                <h2 class="text-xl font-semibold mt-4">title</h2>
+                <div class="image-container mt-4">
+                    <!-- <img src="{{ BASE_URL }}/post/image/{{ postDetails?.imageName }}" alt="" class="w-full"> -->
+                </div>
+                <div class="mt-4">Test</div>
+            </div>
+        </div>
+
+        <div class="md:w-8/12 md:mx-auto mt-8">
+            <h3 class="text-xl font-semibold">Comments (2)</h3>
+            <ng-container *ngIf="postDetails?.comments">
+                <div *ngFor="let comment of postDetails?.comments" class="bg-white shadow-md mt-4">
+                    <div class="p-4">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="bg-white shadow-md border-t-4 border-blue-500 mt-8">
+                <div class="p-4">
+                    <textarea
+                        class="w-full bg-gray-100 border border-gray-300 rounded p-2 focus:outline-none focus:border-blue-500"
+                        rows="4" placeholder="Enter comment here"></textarea>
+                </div>
+                <div class="p-4">
+                    <button (click)="submitComment()"
+                        class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
