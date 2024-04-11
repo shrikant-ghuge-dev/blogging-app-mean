@@ -9,8 +9,8 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPosts() {
-    return this.http.get(`${environment.baseUrl}/api/v1/post`);
+  getAllPosts(searchTxt?: string, catId?: string) {
+    return this.http.get(`${environment.baseUrl}/api/v1/post?searchTerm=${searchTxt}&catId=${catId}`);
   }
 
   addPost(userId: string, catId: string, postData: any) {

@@ -27,7 +27,6 @@ export class UserProfileComponent implements OnInit {
     });
 
     this.loggedInUserId = this.userService.getLoggedInUserId()
-    console.log(this.loggedInUserId)
   }
 
 }

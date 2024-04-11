@@ -20,12 +20,12 @@ export class AddPostComponent {
   categories!: any[];
   categoryId!: string;
   userId!: string;
+  image!: File;
 
   constructor(private fb: FormBuilder, private catService: CategoryService, private userService: UserService, private postService: PostService, private toastr: ToastrService) {
     this.addPostForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      image: ['', Validators.required],
     })
   }
 
@@ -34,11 +34,16 @@ export class AddPostComponent {
       this.categories = res.data;
     })
 
-      this.userId = this.userService.getLoggedInUserId();
+    this.userId = this.userService.getLoggedInUserId();
   }
 
   onAddPost() {
-    this.postService.addPost(this.userId, this.categoryId, this.addPostForm.value).subscribe((res: any) => {
+    const formData = new FormData();
+    formData.append('title', this.addPostForm.controls['title'].value);
+    formData.append('content', this.addPostForm.controls['content'].value);
+    formData.append('image', this.image);
+
+    this.postService.addPost(this.userId, this.categoryId, formData).subscribe((res: any) => {
       this.toastr.success(res?.message, "success");
       this.addPostForm.reset();
     }, error => {
@@ -50,6 +55,8 @@ export class AddPostComponent {
     this.categoryId = e.target.value;
   }
 
-  fileChangeHandler(e: any) { }
+  fileChangeHandler(e: any) {
+    this.image = e.target.files[0];
+  }
 
 }

@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../../Services/post.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, CommonModule],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })

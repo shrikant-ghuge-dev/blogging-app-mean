@@ -44,7 +44,7 @@ router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), 
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         content: req.body.content,
-        category: req.body.category,
+        // category: req.body.category,
         image: imagePath,
         userId: req.params.userId,
         categoryId: req.params.categoryId
@@ -74,10 +74,16 @@ router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), 
 
 
 router.post('/:postId/comments', (req, res, next) => {
+    if (!req.body.comment) {
+        return res.status(403).json({
+            success: 0,
+            message: "Comment or userId can't be empty!"
+        });
+    }
     const commentData = new Comment({
         comment: req.body.comment,
         postId: req.params.postId,
-        userId: req.body.userId
+        // userId: req.body.userId
     })
 
     commentData.save().then(response => {
@@ -90,14 +96,50 @@ router.post('/:postId/comments', (req, res, next) => {
 })
 
 // Get All posts
-router.get('/', (req, res) => {
-    Post.find().populate("userId", "-password").populate("categoryId").select('-password').then(response => {
-        return res.status(201).json({
+// router.get('/', (req, res) => {
+//     Post.find().populate("userId", "-password").populate("categoryId").select('-password').then(response => {
+//         return res.status(201).json({
+//             success: 1,
+//             data: response
+//         });
+//     }).catch(err => console.log(err))
+// })
+router.get('/', async (req, res) => {
+    const { searchTerm, catId } = req.query;
+    let query = {};
+
+    if (searchTerm) {
+        // Add conditions to search by title or content
+        query = {
+            $or: [
+                { title: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive search for title
+                // { content: { $regex: searchTerm, $options: 'i' } } // Case-insensitive search for content
+            ]
+        };
+    }
+
+    if (catId) {
+        query.categoryId = catId;
+    }
+
+    try {
+        const posts = await Post.find(query)
+            .populate("userId", "-password")
+            .populate("categoryId")
+            .select('-password');
+
+        return res.status(200).json({
             success: 1,
-            data: response
+            data: posts
         });
-    }).catch(err => console.log(err))
-})
+    } catch (error) {
+        return res.status(500).json({
+            success: 0,
+            message: "Internal server error"
+        });
+    }
+});
+
 
 // Get post by postid
 router.get('/:postId', (req, res) => {

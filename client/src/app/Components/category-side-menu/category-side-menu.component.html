@@ -1,11 +1,12 @@
 <div class="mt-20">
     <ul class="shadow-lg">
-        <li class="list-group-item">
+        <li class="list-group-item" (click)="onCategory('')">
             <a class="block py-2 px-4 text-blue-600 hover:bg-blue-100" routerLink="/">All Blogs</a>
         </li>
         <ng-container *ngIf="categories">
             <li *ngFor="let cat of categories" class="list-group-item">
-                <a class="block py-2 px-4 text-blue-600 hover:bg-blue-100">{{cat?.categoryTitle}}</a>
+                <a class="block py-2 px-4 text-blue-600 hover:bg-blue-100" href="" routerLink="/"
+                    (click)="onCategory(cat?._id)">{{cat?.categoryTitle}}</a>
             </li>
         </ng-container>
     </ul>

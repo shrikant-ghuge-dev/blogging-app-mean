@@ -6,29 +6,33 @@
                 <form [formGroup]="signUpForm" (ngSubmit)="submitForm()">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Enter Name</label>
-                        <input type="text" id="name" class="form-input w-full" placeholder="Enter name"
-                            formControlName="name" />
+                        <input type="text" id="name"
+                            class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="Enter name" formControlName="name" />
                         <!-- <div class="text-red-500 text-sm mt-1" *ngIf="error.error?.response?.data?.name">{{
                             error.error?.response?.data?.name }}</div> -->
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Enter Email</label>
-                        <input type="email" id="email" class="form-input w-full" placeholder="Enter email"
-                            formControlName="email" />
+                        <input type="email" id="email"
+                            class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="Enter email" formControlName="email" />
                         <!-- <div class="text-red-500 text-sm mt-1" *ngIf="error.error?.response?.data?.email">{{
                             error.error?.response?.data?.email }}</div> -->
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Enter Password</label>
-                        <input type="password" id="password" class="form-input w-full" placeholder="Enter password"
-                            formControlName="password" />
+                        <input type="password" id="password"
+                            class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="Enter password" formControlName="password" />
                         <!-- <div class="text-red-500 text-sm mt-1" *ngIf="error.error?.response?.data?.password">{{
                             error.error?.response?.data?.password }}</div> -->
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="about">About</label>
-                        <textarea id="about" class="form-textarea w-full" placeholder="Enter about"
-                            formControlName="about"></textarea>
+                        <textarea id="about"
+                            class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="Enter about" formControlName="about"></textarea>
                         <!-- <div class="text-red-500 text-sm mt-1" *ngIf="error.error?.response?.data?.about">{{
                             error.error?.response?.data?.about }}</div> -->
                     </div>

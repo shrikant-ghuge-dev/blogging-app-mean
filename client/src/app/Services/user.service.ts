@@ -10,7 +10,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUserProfile(userId: any) {
-    return this.http.get(`${environment.baseUrl} /api/v1/user/${userId}`);
+    return this.http.get(`${environment.baseUrl}/api/v1/user/${userId}`);
   }
 
   getLoggedInUserId() {

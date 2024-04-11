@@ -23,7 +23,8 @@
                             <a class="text-white" routerLink="/add-post">Post Blog</a>
                         </li>
                         <li>
-                            <input type="search" id="search" placeholder="Search post"
+                            <input type="search" id="search" placeholder="Search post" [(ngModel)]="searchText"
+                                (keyup)="onSearch()"
                                 class="bg-gray-700 border border-gray-600 rounded-md py-1 px-3 text-white focus:outline-none focus:ring focus:border-blue-300" />
                         </li>
                     </ul>

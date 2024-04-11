@@ -3,20 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonService } from '../../Services/common.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, NgIf],
+  imports: [RouterModule, NgIf, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
   userData: any;
   isLoggedIn: boolean = false;
+  searchText: string = '';
   private authSubscription!: Subscription;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, private commonService: CommonService) {
   }
 
   ngOnInit(): void {
@@ -37,12 +40,14 @@ export class HeaderComponent implements OnInit {
   }
 
   doLogout(): void {
-    // Clear user data from local storage and update authentication state
     localStorage.removeItem('User');
     localStorage.removeItem('Token');
     this.authService.logout();
     this.isLoggedIn = false;
-    // Perform any additional logout actions
+  }
+
+  onSearch() {
+    this.commonService.searchText(this.searchText);
   }
 
   ngOnDestroy(): void {

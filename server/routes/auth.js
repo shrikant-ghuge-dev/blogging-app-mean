@@ -138,6 +138,11 @@ router.post('/reset-password', async (req, res) => {
     const { token, newPassword } = req.body;
 
     // Validate token (check if it's valid and not expired)
+    if (!token) {
+        return res.status(403).json({ success: false, message: 'Missing token' });
+    }
+
+    // Validate token (check if it's valid and not expired)
     if (!isValidToken(token)) {
         return res.status(400).json({ success: false, message: 'Invalid or expired token' });
     }
