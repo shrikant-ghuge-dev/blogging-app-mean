@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,19 +18,19 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signIn(signInData: any) {
-    return this.http.post('http://localhost:3300/api/v1/auth/login', signInData);
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/login`, signInData);
   }
 
   signUp(signUpData: any) {
-    return this.http.post('http://localhost:3300/api/v1/auth/register', signUpData);
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/register`, signUpData);
   }
 
   forgetPassword(forgetData: any) {
-    return this.http.post('http://localhost:3300/api/v1/auth/forgot-password', forgetData);
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/forgot-password`, forgetData);
   }
 
   resetPassword(resetData: any) {
-    return this.http.post('http://localhost:3300/api/v1/auth/reset-password', resetData);
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/reset-password`, resetData);
   }
 
   login(credentials: { username: string, password: string }): Observable<any> {

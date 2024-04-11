@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-post-details',
@@ -46,12 +47,9 @@ export class PostDetailsComponent implements OnInit {
   }
 
   getImageUrl(imageName: string): string {
-    // Check if imageName exists
     if (imageName) {
       const parts = imageName.split('\\');
-      console.log(`http://localhost:3300/${parts[1]}`)
-      // Return the full URL
-      return `http://localhost:3300/${parts[1]}`;
+      return `${environment.baseUrl}/${parts[1]}`;
     }
     return '';
   }
