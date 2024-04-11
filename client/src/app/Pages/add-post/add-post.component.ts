@@ -6,6 +6,7 @@ import { NgFor } from '@angular/common';
 import { PostService } from '../../Services/post.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../Services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-post',
@@ -21,11 +22,20 @@ export class AddPostComponent {
   categoryId!: string;
   userId!: string;
   image!: File;
+  postId!: string;
+  postDetails: any;
 
-  constructor(private fb: FormBuilder, private catService: CategoryService, private userService: UserService, private postService: PostService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private catService: CategoryService, private userService: UserService,
+    private postService: PostService, private toastr: ToastrService, private route: ActivatedRoute) {
     this.addPostForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
+      categoryName: ['', Validators.required],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      this.postId = params['id'];
+      this.getPostData(this.postId);
     })
   }
 
@@ -41,13 +51,35 @@ export class AddPostComponent {
     const formData = new FormData();
     formData.append('title', this.addPostForm.controls['title'].value);
     formData.append('content', this.addPostForm.controls['content'].value);
+    formData.append('categoryName', this.addPostForm.controls['categoryName'].value);
     formData.append('image', this.image);
 
-    this.postService.addPost(this.userId, this.categoryId, formData).subscribe((res: any) => {
-      this.toastr.success(res?.message, "success");
-      this.addPostForm.reset();
-    }, error => {
-      this.toastr.error(error.error.message, "error");
+    if (this.postId) {
+      this.postService.updatePost(this.postId, formData).subscribe((res: any) => {
+        this.toastr.success(res?.message, "success");
+        this.addPostForm.reset();
+      }, error => {
+        this.toastr.error(error.error.message, "error");
+      })
+    } else {
+      this.postService.addPost(this.userId, this.categoryId, formData).subscribe((res: any) => {
+        this.toastr.success(res?.message, "success");
+        this.addPostForm.reset();
+      }, error => {
+        this.toastr.error(error.error.message, "error");
+      })
+    }
+
+  }
+
+  getPostData(postId: string) {
+    this.postService.getPostDetails(postId).subscribe((res: any) => {
+      this.postDetails = res?.data?.post;
+      this.addPostForm.patchValue({
+        title: this.postDetails.title,
+        content: this.postDetails.content,
+        categoryName: this.postDetails?.categoryId?._id
+      })
     })
   }
 

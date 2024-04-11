@@ -17,6 +17,10 @@ export class PostService {
     return this.http.post(`${environment.baseUrl}/api/v1/post/user/${userId}/category/${catId}/posts`, postData);
   }
 
+  updatePost(postId: string, postData: any) {
+    return this.http.put(`${environment.baseUrl}/api/v1/post/${postId}`, postData);
+  }
+
   deletePost(postId: any) {
     return this.http.delete(`${environment.baseUrl}/api/v1/post/${postId}`);
   }

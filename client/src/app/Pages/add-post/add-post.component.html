@@ -20,14 +20,13 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Select Banner Image</label>
-                    <input id="image" type="file" class="form-control-file"
-                        (change)="fileChangeHandler($event)" />
+                    <input id="image" type="file" class="form-control-file" (change)="fileChangeHandler($event)" />
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Post Category</label>
                     <select id="categoryId" name="categoryId"
                         class="form-control border border-solid border-gray-300 rounded-lg w-full p-2"
-                        (change)="fieldChange($event)" [value]="categoryId">
+                        (change)="fieldChange($event)" formControlName="categoryName">
                         <option value="0" disabled>--Select Category--</option>
                         <option *ngFor="let category of categories" [value]="category?._id">
                             {{category.categoryTitle}}</option>

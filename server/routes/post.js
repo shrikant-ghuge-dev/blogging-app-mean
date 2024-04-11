@@ -93,17 +93,8 @@ router.post('/:postId/comments', (req, res, next) => {
             data: response
         });
     }).catch(err => console.log(err))
-})
+});
 
-// Get All posts
-// router.get('/', (req, res) => {
-//     Post.find().populate("userId", "-password").populate("categoryId").select('-password').then(response => {
-//         return res.status(201).json({
-//             success: 1,
-//             data: response
-//         });
-//     }).catch(err => console.log(err))
-// })
 router.get('/', async (req, res) => {
     const { searchTerm, catId } = req.query;
     let query = {};
@@ -194,12 +185,14 @@ router.delete('/:postId', (req, res) => {
 })
 
 // Update post
-router.put('/:postId', (req, res, next) => {
+router.put('/:postId', upload.single('image'), (req, res, next) => {
+    const imagePath = req?.file?.path;
+
     const postData = {
         title: req.body.title,
         content: req.body.content,
-        category: req.body.category,
-        image: '',
+        categoryId: req.body.categoryName,
+        image: imagePath,
     }
 
     Post.findByIdAndUpdate(req.params.postId, postData, { new: true }).then(response => {

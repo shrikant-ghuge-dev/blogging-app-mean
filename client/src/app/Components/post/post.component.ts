@@ -32,4 +32,8 @@ export class PostComponent implements OnInit {
     this.router.navigate(['/blog', id])
   }
 
+  onUpdateClick(id: any) {
+    this.router.navigate(['/add-post'], { queryParams: { id: id } })
+  }
+
 }
