@@ -13,7 +13,9 @@
                 <p class="text-sm text-gray-600">{{postDetails?.post?.category}}</p>
                 <h2 class="text-xl font-semibold mt-4">{{postDetails?.title}}</h2>
                 <div class="image-container mt-4">
-                    <!-- <img src="{{ BASE_URL }}/post/image/{{ postDetails?.imageName }}" alt="" class="w-full"> -->
+                    <img [src]="getImageUrl(postDetails?.image)" alt="" class="w-full">
+
+                    <!-- <img src="{{ BASE_URL }}/{{ postDetails?.imageName }}" alt="" class="w-full"> -->
                 </div>
                 <div class="mt-4">{{postDetails?.content}}</div>
             </div>

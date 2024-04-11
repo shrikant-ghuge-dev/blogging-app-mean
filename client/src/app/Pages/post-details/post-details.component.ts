@@ -44,4 +44,15 @@ export class PostDetailsComponent implements OnInit {
       this.userComment = '';
     })
   }
+
+  getImageUrl(imageName: string): string {
+    // Check if imageName exists
+    if (imageName) {
+      const parts = imageName.split('\\');
+      console.log(`http://localhost:3300/${parts[1]}`)
+      // Return the full URL
+      return `http://localhost:3300/${parts[1]}`;
+    }
+    return '';
+  }
 }
