@@ -6,6 +6,7 @@ import { SigninComponent } from './Pages/signin/signin.component';
 import { SignupComponent } from './Pages/signup/signup.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { PostDetailsComponent } from './Pages/post-details/post-details.component';
+import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
     {
@@ -38,6 +39,10 @@ export const routes: Routes = [
     {
         path: 'blog/:id',
         component: PostDetailsComponent
+    },
+    {
+        path: 'user/:id',
+        component: UserProfileComponent
     },
     {
         path: '**',

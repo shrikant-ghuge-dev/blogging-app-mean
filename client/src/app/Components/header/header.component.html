@@ -15,7 +15,7 @@
             </div>
             <div class="hidden md:flex md:items-center">
                 <div class="flex-grow">
-                    <ul class="flex justify-end space-x-4">
+                    <ul class="flex justify-end space-x-4 items-center">
                         <li>
                             <a class="text-white" routerLink="/">Home</a>
                         </li>
@@ -30,12 +30,15 @@
                 </div>
                 <div class="ml-4 flex items-center">
                     <ul class="flex space-x-4">
-                        <li>
-                            <a class="text-white">Test</a>
-                        </li>
-                        <li>
-                            <a class="text-white" (click)="doLogout()">Logout</a>
-                        </li>
+                        <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+                            <li>
+                                <a class="text-white" href="" *ngIf="userData?.name"
+                                    [routerLink]="'/user/' + userData?._id">{{ userData?.name }}</a>
+                            </li>
+                            <li>
+                                <a class="text-white" href="" (click)="doLogout()">Logout</a>
+                            </li>
+                        </ng-container>
                         <ng-template #notLoggedIn>
                             <li>
                                 <a class="text-white" routerLink="/login">Login</a>
@@ -45,6 +48,7 @@
                             </li>
                         </ng-template>
                     </ul>
+
                 </div>
             </div>
         </div>

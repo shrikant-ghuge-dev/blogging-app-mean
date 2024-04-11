@@ -1,0 +1,40 @@
+<div class="md:mx-auto md:max-w-2xl">
+    <div class="mt-5 shadow-md">
+        <div class="p-6">
+            <h3 class="text-xl font-bold mb-4">User Details</h3>
+            <div class="text-center">
+                <img [src]="user.image ? user.image : 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg'"
+                    alt="User Image" class="max-w-150 max-h-150 rounded-full mx-auto mb-6 w-60">
+            </div>
+            <table class="w-full text-center border-collapse">
+                <tbody>
+                    <tr>
+                        <td class="text-uppercase font-bold border border-gray-300 py-2 px-4">BloggingId</td>
+                        <td class="border border-gray-300 py-2 px-4">{{ user._id }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-bold border border-gray-300 py-2 px-4">Name</td>
+                        <td class="border border-gray-300 py-2 px-4">{{ user?.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-bold border border-gray-300 py-2 px-4">Email</td>
+                        <td class="border border-gray-300 py-2 px-4">{{ user?.email }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-bold border border-gray-300 py-2 px-4">About</td>
+                        <td class="border border-gray-300 py-2 px-4">{{ user?.about }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-bold border border-gray-300 py-2 px-4">Role</td>
+                        <td class="border border-gray-300 py-2 px-4">
+                            <div *ngFor="let role of user?.roles">{{ role.name }}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="loggedInUserId && loggedInUserId === userId" class="text-center mt-6">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded">Update Profile</button>
+            </div>
+        </div>
+    </div>
+</div>

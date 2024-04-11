@@ -9,7 +9,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
                     <div *ngFor="let post1 of posts" class="border border-gray-200 shadow-md rounded-md p-4">
                         <!-- Post component -->
-                        <app-post [post]="post1"></app-post>
+                        <app-post (postId)="deleteHandlers($event)" [post]="post1"></app-post>
                     </div>
                 </div>
                 <!-- <div *ngIf="!posts.content || posts.content.length === 0" class="text-center mt-4">
@@ -19,9 +19,9 @@
             <div *ngIf="!posts" class="text-center mt-4">
                 Loading...
             </div>
-            <div *ngIf="posts" class="text-center mt-4">
+            <!-- <div *ngIf="posts" class="text-center mt-4">
                 End of posts.
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

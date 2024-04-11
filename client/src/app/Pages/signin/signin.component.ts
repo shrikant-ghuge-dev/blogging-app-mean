@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +14,7 @@ import { Router, RouterModule } from '@angular/router';
 export class SigninComponent {
   signInForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -21,10 +22,13 @@ export class SigninComponent {
   }
 
   submitHandler() {
-    console.log(this.signInForm.value)
-    this.authService.signIn(this.signInForm.value).subscribe(res => {
-      console.log(res);
-      this.router.navigate(['/home'])
+    this.authService.signIn(this.signInForm.value).subscribe((res: any) => {
+      localStorage.setItem("Token", res.token)
+      localStorage.setItem("User", JSON.stringify(res.user))
+      // this.authService.isAuthenticated.next(true);
+      this.authService.checkAuthenticated();
+      this.router.navigate(['/home']);
+      this.toastr.success(res?.message, "success");
     })
   }
 

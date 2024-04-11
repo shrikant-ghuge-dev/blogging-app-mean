@@ -55,7 +55,13 @@ router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), 
             message: "Post created successfully!",
             data: response
         });
-    }).catch(err => console.log(err))
+    }).catch(err => {
+        return res.status(400).json({
+            success: 0,
+            message: "Missing required fields",
+            data: err
+        });
+    })
 },
     // multer Error Handling
     (error, req, res, next) => {

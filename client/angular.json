@@ -30,7 +30,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "node_modules/quill/dist/quill.bubble.css",
+                "inject": false
+              }
             ],
             "scripts": []
           },

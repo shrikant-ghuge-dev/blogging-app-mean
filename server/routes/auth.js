@@ -61,7 +61,8 @@ router.post('/register', async (req, res, next) => {
                 email: req.body.email,
                 name: req.body.name,
                 password: encryptedPassword,
-                about: req.body.about
+                about: req.body.about,
+                role: 'NORMAL'
             })
             data.save().then((response) => {
                 return res.status(201).json({
@@ -222,8 +223,8 @@ async function updateUserPassword(user, newPassword) {
 
 // Function to invalidate the token
 async function invalidateToken(token) {
-        await User.updateOne({ resetToken: token }, { $unset: { resetToken: 1, resetTokenExpiry: 1 } });
-    }
+    await User.updateOne({ resetToken: token }, { $unset: { resetToken: 1, resetTokenExpiry: 1 } });
+}
 
 
-    module.exports = router;
+module.exports = router;

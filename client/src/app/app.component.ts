@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './Components/header/header.component';
+import { LoaderService } from './Services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,6 @@ import { HeaderComponent } from './Components/header/header.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'blogging';
+
+  constructor(public loaderService: LoaderService) { }
 }

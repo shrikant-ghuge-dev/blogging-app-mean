@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,7 @@ import { error } from 'console';
 export class SignupComponent {
   signUpForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.signUpForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -24,10 +25,11 @@ export class SignupComponent {
   }
 
   submitForm() {
-    this.authService.signUp(this.signUpForm.value).subscribe(res => {
+    this.authService.signUp(this.signUpForm.value).subscribe((res: any) => {
       this.router.navigate(['/signin']);
+      this.toastr.info(res?.message, "success");
     }, error => {
-      console.log(error)
+      this.toastr.info(error, "error");
     })
   }
 
