@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Create and sign JWT
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Exclude password field from user object
         const { password: userPassword, ...userData } = user.toObject();
@@ -62,7 +62,6 @@ router.post('/register', async (req, res, next) => {
                 name: req.body.name,
                 password: encryptedPassword,
                 about: req.body.about,
-                role: 'NORMAL'
             })
             data.save().then((response) => {
                 return res.status(201).json({

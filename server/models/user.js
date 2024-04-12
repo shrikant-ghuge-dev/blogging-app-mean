@@ -5,7 +5,7 @@ let userSchema = new mongoose.Schema({
     password: { type: String, require: true },
     name: { type: String, require: true },
     about: { type: String, require: true },
-    role: { type: String, require: true },
+    role: { type: String, enum: ['User', 'Admin'], default: 'Admin', require: true },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date }
 })

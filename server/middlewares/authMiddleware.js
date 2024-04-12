@@ -18,14 +18,15 @@ const protect = asyncHandler(async (req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-            req.user = await User.findById(decoded.id).select('-password')
-
+            req.user = await User.findById(decoded.userId).select('-password')
+            if (!req.user) {
+                throw new Error('User not found');
+            }
             next()
 
         } catch (error) {
-            res.status(401)
-            throw new Error('Not authorizad')
+            console.log(error)
+            res.status(401).json({ message: 'Unauthorized' });
 
         }
     }
@@ -38,4 +39,30 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 })
 
-module.exports = { allowGetWithoutAuth }
+// const verifyAuthorization = (role) => {
+//     return (req, res, next) => {
+//         console.log(req.user, role)
+//         next()
+//     }
+// }
+
+const verifyAuthorization = (role) => {
+    return (req, res, next) => {
+        // Check if the user is authenticated and has a role
+        if (req.user && req.user.role) {
+            // Compare the user's role with the required role
+            if (req.user.role === role) {
+                // User is authorized, proceed to the next middleware
+                next();
+            } else {
+                // User is not authorized, send a 403 Forbidden response
+                res.status(403).json({ message: 'Forbidden' });
+            }
+        } else {
+            // User is not authenticated or does not have a role, send a 401 Unauthorized response
+            res.status(401).json({ message: 'Unauthorized' });
+        }
+    };
+};
+
+module.exports = { allowGetWithoutAuth, verifyAuthorization }

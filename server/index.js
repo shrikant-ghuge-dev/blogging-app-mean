@@ -7,10 +7,11 @@ const postRoute = require('./routes/post')
 const userRoute = require('./routes/user')
 const commentRoute = require('./routes/comment')
 const categoryRoute = require('./routes/category')
+const adminRoute = require('./routes/admin')
 // To read the body from the requests
 const bodyParser = require('body-parser');
 const connectToMongoDB = require('./helper/db');
-const { allowGetWithoutAuth } = require('./middlewares/authMiddleware');
+const { allowGetWithoutAuth, verifyAuthorization } = require('./middlewares/authMiddleware');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 
 // database
@@ -35,6 +36,8 @@ app.use('/api/v1/post', allowGetWithoutAuth, postRoute)
 app.use('/api/v1/user', allowGetWithoutAuth, userRoute)
 
 app.use('/api/v1/category', allowGetWithoutAuth, categoryRoute)
+
+app.use('/api/v1/admin', allowGetWithoutAuth, verifyAuthorization("Admin"), adminRoute)
 
 app.use(errorHandler);
 

@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+// import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,7 @@ export class AuthService {
   // isAuthenticated$ = this.isAuthenticated.asObservable();
   // private userName: string | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   signIn(signInData: any) {
     return this.http.post(`${environment.baseUrl}/api/v1/auth/login`, signInData);
@@ -33,10 +36,10 @@ export class AuthService {
     return this.http.post(`${environment.baseUrl}/api/v1/auth/reset-password`, resetData);
   }
 
-  login(credentials: { username: string, password: string }): Observable<any> {
-    // Assuming you have an API endpoint for login
-    return this.http.post<any>('your-api-url/login', credentials);
-  }
+  // login(credentials: { username: string, password: string }): Observable<any> {
+  // Assuming you have an API endpoint for login
+  //   return this.http.post<any>('your-api-url/login', credentials);
+  // }
 
   logout(): void {
     // Clear authentication state and any other relevant data
@@ -53,25 +56,17 @@ export class AuthService {
     this.isAuthenticated.next(isAuthenticated);
   }
 
-  // login(userName: string): void {
-  //   this.isAuthenticated = true;
-  //   this.userName = userName;
+  verifyRoleAndNavigate(token: string): void {
+    // Decode JWT token to extract user role
+    const decodedToken: any = jwtDecode(token);
+    console.log(decodedToken)
+    const role: string = decodedToken.role; // Assuming role is stored in the token
 
-  //   this.isAuthenticatedUser(JSON.stringify(this.isAuthenticated));
-  // }
-
-  // logout(): void {
-  //   this.isAuthenticated = false;
-  //   this.userName = null;
-  //   this.isAuthenticatedUser(JSON.stringify(this.isAuthenticated));
-  // }
-
-  // isAuthenticatedUser(isAuthenticated: any): boolean {
-  //   localStorage.setItem("isAuthenticatedUser", isAuthenticated)
-  //   return this.isAuthenticated;
-  // }
-
-  // getUserName(): string | null {
-  //   return this.userName;
-  // }
+    // Redirect based on user role
+    if (role === 'Admin') {
+      this.router.navigate(['/admin']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 }

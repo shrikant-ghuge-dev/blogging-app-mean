@@ -7,16 +7,18 @@
     <div class="mt-8">
         <div class="md:w-full">
             <div class="bg-white shadow-md p-6">
-                <p class="text-sm text-gray-600">Posted By <a href="" [routerLink]="'/user/' + postDetails?.userId?._id"
-                        class="font-semibold text-blue-500 hover:underline">{{postDetails?.userId?.name}}</a> on <span
-                        class="font-semibold">{{postDetails?.createdAt | date:'mediumDate'}}</span></p>
+                <span
+                    class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">{{postDetails?.categoryId?.categoryTitle}}</span>
                 <p class="text-sm text-gray-600">{{postDetails?.post?.category}}</p>
-                <h2 class="text-xl font-semibold mt-4">{{postDetails?.title}}</h2>
-                <div class="image-container mt-4">
-                    <img [src]="getImageUrl(postDetails?.image)" alt="" class="w-full">
-
-                    <!-- <img src="{{ BASE_URL }}/{{ postDetails?.imageName }}" alt="" class="w-full"> -->
+                <h2 class="text-xl font-semibold mt-4">{{postDetails?.title | titlecase}}</h2>
+                <div class="image-container mt-4 flex justify-center items-center">
+                    <img [src]="getImageUrl(postDetails?.image)" alt="" class="w-full max-h-[300px]">
                 </div>
+                <p class="text-sm text-gray-600 text-end italic">Posted By <a href=""
+                        [routerLink]="'/user/' + postDetails?.userId?._id"
+                        class="font-semibold text-blue-500 hover:underline">{{postDetails?.userId?.name |
+                        titlecase}}</a> on <span class="font-semibold">{{postDetails?.createdAt |
+                        date:'mediumDate'}}</span></p>
                 <div class="mt-4">{{postDetails?.content}}</div>
             </div>
         </div>
@@ -39,7 +41,8 @@
                 </div>
                 <div class="p-4">
                     <button (click)="submitComment()"
-                        class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">Submit</button>
+                        class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">Add
+                        Comment</button>
                 </div>
             </div>
         </div>

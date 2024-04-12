@@ -26,7 +26,8 @@ export class SigninComponent {
       localStorage.setItem("Token", res.token)
       localStorage.setItem("User", JSON.stringify(res.user))
       this.authService.checkAuthenticated();
-      this.router.navigate(['/home']);
+      // this.router.navigate(['/home']);
+      this.authService.verifyRoleAndNavigate(res.token);
       this.toastr.success(res?.message, "success");
     })
   }
