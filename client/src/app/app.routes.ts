@@ -11,6 +11,7 @@ import { restrictRouteGuard } from './Guards/restrict-route.guard';
 import { AdminHomeComponent } from './AdminPanel/Pages/admin-home/admin-home.component';
 import { UsersComponent } from './AdminPanel/Pages/users/users.component';
 import { AdminComponent } from './AdminPanel/Components/admin/admin.component';
+import { PostsComponent } from './AdminPanel/Pages/posts/posts.component';
 
 export const routes: Routes = [
     {
@@ -66,6 +67,10 @@ export const routes: Routes = [
             {
                 path: 'users',
                 component: UsersComponent,
+            },
+            {
+                path: 'posts',
+                component: PostsComponent,
             }
         ]
     },

@@ -10,30 +10,118 @@ router.get('', (req, res) => {
 })
 
 
-router.post('/category', (req, res) => {
-    const catModel = new Category({
-        _id: new mongoose.Types.ObjectId(),
-        categoryTitle: req.body.categoryTitle,
-        categoryDescription: req.body.categoryDescription
-    })
+// Create a new category
+router.post('/category', async (req, res) => {
+    try {
+        const { categoryTitle, categoryDescription } = req.body;
 
-    catModel.save().then(response => {
-        res.json({
-            success: 1,
-            message: "Category created successfully!",
-            data: response
-        })
-    }).catch(error => console.log(error))
-})
-
-router.delete('/category/:catId', (req, res) => {
-    Category.deleteOne({ _id: req.params.catId }).then(response => {
-        return res.status(201).json({
-            success: 1,
-            message: 'Category deleted successfully',
-            data: response
+        // Create a new category instance
+        const catModel = new Category({
+            _id: new mongoose.Types.ObjectId(),
+            categoryTitle,
+            categoryDescription
         });
-    }).catch(err => console.log(err))
-})
+
+        // Save the category to the database
+        const savedCategory = await catModel.save();
+
+        res.status(201).json({
+            success: true,
+            message: 'Category created successfully!',
+            data: savedCategory
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create category',
+            error: error.message
+        });
+    }
+});
+
+// Delete a category by ID
+router.delete('/category/:catId', async (req, res) => {
+    try {
+        const deletedCategory = await Category.deleteOne({ _id: req.params.catId });
+
+        if (deletedCategory.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Category not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Category deleted successfully',
+            data: deletedCategory
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete category',
+            error: error.message
+        });
+    }
+});
+
+router.get('/users', async (req, res) => {
+    try {
+        // Fetch all users except the password field
+        const users = await User.find({}).select('-password');
+
+        if (!users || users.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No users found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: users
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch users',
+            error: error.message
+        });
+    }
+});
+
+// Delete post
+router.delete('/post/:postId', async (req, res) => {
+    try {
+        // Delete all comments associated with the post
+        await Comment.deleteMany({ postId: req.params.postId });
+
+        // Delete the post
+        const deletedPost = await Post.deleteOne({ _id: req.params.postId });
+
+        if (deletedPost.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Post and associated comments deleted successfully',
+            data: deletedPost
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete post and associated comments',
+            error: error.message
+        });
+    }
+});
+
 
 module.exports = router

@@ -25,14 +25,14 @@ router.get('/:userId', (req, res) => {
 })
 
 
-router.get('/', (req, res) => {
-    User.find({}).select('-password').then(users => {
-        res.status(200).json({
-            success: 1,
-            data: users
-        })
-    }).catch(error => console.log(error))
-})
+// router.get('/', (req, res) => {
+//     User.find({}).select('-password').then(users => {
+//         res.status(200).json({
+//             success: 1,
+//             data: users
+//         })
+//     }).catch(error => console.log(error))
+// })
 
 router.put('/:userId', (req, res) => {
     const userData = {

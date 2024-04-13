@@ -76,9 +76,6 @@ router.post('/register', async (req, res, next) => {
         })
 });
 
-// Store tokens and associate them with email addresses
-const passwordResetTokens = {};
-
 // Set up nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',

@@ -11,28 +11,32 @@
                 <ng-container *ngIf="isSidePanelOpen; else iconsOnly">
                     <li class="mb-2 flex items-center">
 
-                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
+                        <a href="#" routerLink="/admin/home" routerLinkActive="selected"
+                            class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
                             <span class="mr-2">
                                 <i class="fas fa-chart-line"></i>
                             </span>Dashboard
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLink="/admin/users">
+                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                            routerLink="/admin/users">
                             <span class="mr-2">
                                 <i class="fas fa-users"></i>
                             </span>Users
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
+                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                            routerLink="/admin/posts">
                             <span class="mr-2">
                                 <i class="fas fa-file-alt"></i>
                             </span>Posts
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
+                        <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                            routerLink="/admin/posts">
                             <span class="mr-2">
                                 <i class="fas fa-cog"></i>
                             </span>Settings
@@ -77,15 +81,15 @@
     <div class="w-full bg-gray-200 transition-all duration-300 ease-in-out"
         [ngClass]="{'ml-0': !isSidePanelOpen, 'ml-1/4': isSidePanelOpen}">
         <!-- Header -->
-        <header class="bg-white shadow p-4">
-            <div class="flex justify-between items-center">
+        <header class="bg-white shadow">
+            <div class="flex justify-between items-center h-14 text-white bg-sky-300 px-4">
                 <h1 class="text-xl font-semibold">Admin Dashboard</h1>
                 <button class="focus:outline-none text-red-500" (click)="toggleSidePanel()">Toggle</button>
                 <!-- Add any header elements here, such as user profile dropdown -->
             </div>
         </header>
         <!-- Content area -->
-        <div class="p-4">
+        <div class="m-4 shadow-md">
             <!-- Main content goes here -->
             <router-outlet></router-outlet>
         </div>

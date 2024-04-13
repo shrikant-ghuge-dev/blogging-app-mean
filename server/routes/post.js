@@ -174,15 +174,34 @@ router.get('/:postId', (req, res) => {
 });
 
 // Delete post
-router.delete('/:postId', (req, res) => {
-    Post.deleteOne({ _id: req.params.postId }).then(response => {
-        return res.status(201).json({
-            success: 1,
-            message: 'Post deleted successfully',
-            data: response
+router.delete('/:postId', async (req, res) => {
+    try {
+        // Delete all comments associated with the post
+        await Comment.deleteMany({ postId: req.params.postId });
+
+        // Delete the post
+        const deletedPost = await Post.deleteOne({ _id: req.params.postId });
+
+        if (deletedPost.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Post and associated comments deleted successfully',
+            data: deletedPost
         });
-    }).catch(err => console.log(err))
-})
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete post and associated comments',
+            error: error.message
+        });
+    }
+});
 
 // Update post
 router.put('/:postId', upload.single('image'), (req, res, next) => {
