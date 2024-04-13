@@ -3,6 +3,11 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 
 const allowGetWithoutAuth = (req, res, next) => {
+    if (req.originalUrl.includes('admin')) {
+        // If it's a GET request, allow it to proceed without authentication
+        // return next();
+        console.log('admin')
+    }
     if (req.method === 'GET') {
         // If it's a GET request, allow it to proceed without authentication
         return next();
@@ -25,7 +30,6 @@ const protect = asyncHandler(async (req, res, next) => {
             next()
 
         } catch (error) {
-            console.log(error)
             res.status(401).json({ message: 'Unauthorized' });
 
         }
@@ -39,17 +43,12 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 })
 
-// const verifyAuthorization = (role) => {
-//     return (req, res, next) => {
-//         console.log(req.user, role)
-//         next()
-//     }
-// }
-
 const verifyAuthorization = (role) => {
     return (req, res, next) => {
+        console.log("first", req.user)
         // Check if the user is authenticated and has a role
         if (req.user && req.user.role) {
+            console.log("first", req.role)
             // Compare the user's role with the required role
             if (req.user.role === role) {
                 // User is authorized, proceed to the next middleware

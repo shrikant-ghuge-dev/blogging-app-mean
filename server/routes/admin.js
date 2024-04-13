@@ -1,6 +1,7 @@
 const express = require('express');
 const Category = require('../models/category');
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -80,13 +81,13 @@ router.get('/users', async (req, res) => {
         }
 
         res.status(200).json({
-            success: true,
+            success: 1,
             data: users
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            success: false,
+            success: 0,
             message: 'Failed to fetch users',
             error: error.message
         });
@@ -120,6 +121,26 @@ router.delete('/post/:postId', async (req, res) => {
             message: 'Failed to delete post and associated comments',
             error: error.message
         });
+    }
+});
+
+router.post('/user/:userId/status', async(req, res) => {
+    const userId = req.params.userId;
+    const { active } = req.body;
+
+    try {
+        // Find the user by ID and update their status
+        const user = await User.findByIdAndUpdate(userId, { active }, { new: true });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        const action = active ? 'activated' : 'deactivated';
+        return res.status(200).json({ success: true, message: `User ${action} successfully`, data: user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 

@@ -37,7 +37,8 @@ app.use('/api/v1/user', allowGetWithoutAuth, userRoute)
 
 app.use('/api/v1/category', allowGetWithoutAuth, categoryRoute)
 
-app.use('/api/v1/admin', allowGetWithoutAuth, verifyAuthorization("Admin"), adminRoute)
+app.use('/api/v1/admin', adminRoute)
+// app.use('/api/v1/admin', allowGetWithoutAuth, verifyAuthorization("Admin"), adminRoute)
 
 app.use(errorHandler);
 

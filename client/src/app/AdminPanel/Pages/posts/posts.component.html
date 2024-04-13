@@ -14,36 +14,32 @@
                 Status
             </th>
             <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Action
+                Owner
             </th>
         </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-        <tr class="hover:bg-gray-100">
+        <tr class="hover:bg-gray-100" *ngFor="let post of postList">
             <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center justify-center">
-                    <div class="text-sm font-medium text-gray-900">1</div>
+                    <div class="text-sm font-medium text-gray-900">{{post?._id}}</div>
                 </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center justify-center">
-                    <div class="flex-shrink-0 h-10 w-10">
-                        <!-- User avatar or icon -->
-                        <img class="h-10 w-10 rounded-full" src="...">
-                    </div>
-                    <div class="ml-4">
+                    <div>
                         <!-- User name -->
-                        <div class="text-sm font-medium text-gray-900">John Doe</div>
+                        <div class="text-sm font-medium text-gray-900">{{post?.title}}</div>
                     </div>
                 </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <!-- User email -->
-                <div class="text-sm text-gray-900">john.doeexample.com</div>
+                <div class="text-sm text-gray-900">{{post?.category}}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <!-- User email -->
-                <div class="text-sm text-gray-900">Active</div>
+                <div class="text-sm text-gray-900">{{post?.userId?.name}}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                 <!-- Edit and Delete buttons -->

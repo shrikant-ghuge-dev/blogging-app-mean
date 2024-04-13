@@ -13,6 +13,10 @@ export class UserService {
     return this.http.get(`${environment.baseUrl}/api/v1/user/${userId}`);
   }
 
+  getAllUsers() {
+    return this.http.get(`${environment.baseUrl}/api/v1/admin/users`);
+  }
+
   getLoggedInUserId() {
     const userDataString = localStorage.getItem("User");
     if (userDataString !== null) {

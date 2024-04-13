@@ -9,7 +9,7 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPosts(searchTxt?: string, catId?: string) {
+  getAllPosts(searchTxt?: string | '', catId?: string | '') {
     return this.http.get(`${environment.baseUrl}/api/v1/post?searchTerm=${searchTxt}&catId=${catId}`);
   }
 

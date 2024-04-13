@@ -45,21 +45,21 @@
                 </ng-container>
                 <ng-template #iconsOnly>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="my-2">
+                        <a href="#" class="my-2" routerLink="/admin/home" routerLinkActive="selected">
                             <span class="mr-2">
                                 <i class="hover:text-yellow-600 fas fa-chart-line"></i>
                             </span>
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="my-2">
+                        <a href="#" class="my-2" routerLink="/admin/users" routerLinkActive="selected">
                             <span class="mr-2">
                                 <i class="hover:text-yellow-600 fas fa-users"></i>
                             </span>
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="my-2">
+                        <a href="#" class="my-2" routerLink="/admin/posts" routerLinkActive="selected">
                             <span class="mr-2">
                                 <i class="hover:text-yellow-600 fas fa-file-alt"></i>
                             </span>
@@ -89,7 +89,7 @@
             </div>
         </header>
         <!-- Content area -->
-        <div class="m-4 shadow-md">
+        <div class="m-4 overflow-auto h-[85vh]">
             <!-- Main content goes here -->
             <router-outlet></router-outlet>
         </div>
