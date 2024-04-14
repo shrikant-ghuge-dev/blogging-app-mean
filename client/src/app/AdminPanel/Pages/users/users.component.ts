@@ -36,7 +36,13 @@ export class UsersComponent {
     });
   }
 
-  updateUser(user: any) { }
+  updateUser(user: any) {
+    this.userService.userActivateDeactivate(user._id, { active: true }).subscribe((res:any) => {
+      this.toastr.success(res?.message, 'Success')
+    }, error => {
+      this.toastr.error(error?.error?.message, 'Error')
+    })
+  }
 
   cancelBtnClick() {
     this.isPopupVisible = false;

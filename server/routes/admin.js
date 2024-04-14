@@ -96,7 +96,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
-router.delete('/user/:userId', async(req, res) => {
+router.delete('/user/:userId', async (req, res) => {
     try {
         const deletedUser = await User.deleteOne({ _id: req.params.userId });
         if (deletedUser.deletedCount === 0) {
@@ -125,7 +125,7 @@ router.delete('/post/:postId', async (req, res) => {
     try {
         // Delete all comments associated with the post
         await Comment.deleteMany({ postId: req.params.postId });
-        
+
         // Delete the post
         const deletedPost = await Post.deleteOne({ _id: req.params.postId });
 
@@ -150,7 +150,7 @@ router.delete('/post/:postId', async (req, res) => {
     }
 });
 
-router.post('/user/:userId/status', async(req, res) => {
+router.put('/user/:userId/status', async (req, res) => {
     const userId = req.params.userId;
     const { active } = req.body;
 

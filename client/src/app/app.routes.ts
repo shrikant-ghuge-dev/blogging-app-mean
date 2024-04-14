@@ -12,6 +12,8 @@ import { AdminHomeComponent } from './AdminPanel/Pages/admin-home/admin-home.com
 import { UsersComponent } from './AdminPanel/Pages/users/users.component';
 import { AdminComponent } from './AdminPanel/Components/admin/admin.component';
 import { PostsComponent } from './AdminPanel/Pages/posts/posts.component';
+import { CategoriesComponent } from './AdminPanel/Pages/categories/categories.component';
+import { adminGuard } from './Guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -54,11 +56,13 @@ export const routes: Routes = [
     {
         path: 'admin',
         redirectTo: 'admin/home',
-        pathMatch: 'full' // Redirect only when the full path is '/admin'
+        pathMatch: 'full', // Redirect only when the full path is '/admin',
+        // canActivateChild: [adminGuard]
     },
     {
         path: 'admin',
         component: AdminComponent,
+        canActivateChild: [adminGuard],
         children: [
             {
                 path: 'home',
@@ -71,6 +75,10 @@ export const routes: Routes = [
             {
                 path: 'posts',
                 component: PostsComponent,
+            },
+            {
+                path: 'categories',
+                component: CategoriesComponent,
             }
         ]
     },

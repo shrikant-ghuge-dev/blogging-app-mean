@@ -41,7 +41,7 @@ export class PostDetailsComponent implements OnInit {
 
     const payload = {
       comment: this.userComment,
-      userId: this.userService.getLoggedInUserId()
+      userId: this.userService.getLoggedInUserId(),
     }
     this.postService.addCommentOnPost(this.postId, payload).subscribe((res: any) => {
       this.comments.push(payload);

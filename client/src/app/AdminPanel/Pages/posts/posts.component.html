@@ -1,58 +1,70 @@
-<table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Id
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Name
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Email
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Status
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                Owner
-            </th>
-        </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-        <tr class="hover:bg-gray-100" *ngFor="let post of postList">
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center justify-center">
-                    <div class="text-sm font-medium text-gray-900">{{post?._id}}</div>
-                </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center justify-center">
-                    <div>
-                        <!-- User name -->
-                        <div class="text-sm font-medium text-gray-900">{{post?.title}}</div>
+<div class="flex justify-between items-center bg-white shadow-md mb-4 p-4">
+    <p class="font-bold">Posts</p>
+    <!-- <button class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded" type="button"
+        (click)="addCategory()">Add Category</button> -->
+</div>
+<div class="overflow-auto h-[72vh]">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                    Id
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                    Name
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                    Email
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                    Status
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                    Owner
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr class="hover:bg-gray-100" *ngFor="let post of postList">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center justify-center">
+                        <div class="text-sm font-medium text-gray-900">{{post?._id}}</div>
                     </div>
-                </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <!-- User email -->
-                <div class="text-sm text-gray-900">{{post?.category}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <!-- User email -->
-                <div class="text-sm text-gray-900">{{post?.userId?.name}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
-                <!-- Edit and Delete buttons -->
-                <button class="text-indigo-600 hover:text-indigo-900 mr-2">
-                    <i class="fa fa-edit text-lg"></i>
-                </button>
-                <button class="text-red-600 hover:text-red-900" (click)="deletePost(post?._id)">
-                    <i class="fa fa-trash text-lg"></i>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center justify-center">
+                        <div>
+                            <!-- User name -->
+                            <div class="text-sm font-medium text-gray-900">{{post?.title}}</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <!-- User email -->
+                    <div class="text-sm text-gray-900">{{post?.category}}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <!-- User email -->
+                    <div class="text-sm text-gray-900">{{post?.userId?.name}}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
+                    <!-- Edit and Delete buttons -->
+                    <button class="text-indigo-600 hover:text-indigo-900 mr-2">
+                        <i class="fa fa-edit text-lg"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-900" (click)="deletePost(post?._id)">
+                        <i class="fa fa-trash text-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-<app-confirmation-popup [textMsg]="textMsg" [isPopupVisible]="isPopupVisible"
-    (btnClick)="onDeletePost()" (cancelBtnClick)="cancelBtnClick()"></app-confirmation-popup>
+<app-confirmation-popup [textMsg]="textMsg" [isPopupVisible]="isPopupVisible" (btnClick)="onDeletePost()"
+    (cancelBtnClick)="cancelBtnClick()"></app-confirmation-popup>

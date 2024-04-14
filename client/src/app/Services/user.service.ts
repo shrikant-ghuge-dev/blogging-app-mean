@@ -21,6 +21,10 @@ export class UserService {
     return this.http.delete(`${environment.baseUrl}/api/v1/admin/user/${userId}`);
   }
 
+  userActivateDeactivate(userId: any, status:any) {
+    return this.http.put(`${environment.baseUrl}/api/v1/admin/user/${userId}/status`, status);
+  }
+
   getLoggedInUserId() {
     const userDataString = localStorage.getItem("User");
     if (userDataString !== null) {
@@ -38,6 +42,16 @@ export class UserService {
       return userData;
     } else {
       return '';
+    }
+  }
+
+  isAdmin() {
+    const userDataString = localStorage.getItem("User");
+    if (userDataString !== null) {
+      const userData = JSON.parse(userDataString);
+      return (userData.role === 'Admin') ? true : false;
+    } else {
+      return false;
     }
   }
 }

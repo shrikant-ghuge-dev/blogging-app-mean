@@ -5,8 +5,6 @@ export const restrictRouteGuard: CanActivateFn = (route, state) => {
   if (localStorage.getItem("User")) {
     return true;
   }
-  // this.router.navigate(['/login']);
-  // route.url
 
-  return inject(Router).createUrlTree(['/signin']);;
+  return inject(Router).createUrlTree(['/signin']);
 };

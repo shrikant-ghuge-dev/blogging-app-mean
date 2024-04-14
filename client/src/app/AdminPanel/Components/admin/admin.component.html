@@ -36,10 +36,10 @@
                     </li>
                     <li class="mb-2 flex items-center">
                         <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
-                            routerLink="/admin/posts">
+                            routerLink="/admin/categories">
                             <span class="mr-2">
                                 <i class="fas fa-cog"></i>
-                            </span>Settings
+                            </span>Categories
                         </a>
                     </li>
                 </ng-container>
@@ -66,14 +66,13 @@
                         </a>
                     </li>
                     <li class="mb-2 flex items-center">
-                        <a href="#" class="my-2">
+                        <a href="#" class="my-2" routerLink="/admin/categories" routerLinkActive="selected">
                             <span class="mr-2">
                                 <i class="hover:text-yellow-600 fas fa-cog"></i>
                             </span>
                         </a>
                     </li>
                 </ng-template>
-
             </ul>
         </div>
     </div>
@@ -83,16 +82,21 @@
         <!-- Header -->
         <header class="bg-white shadow">
             <div class="flex justify-between items-center h-14 text-white bg-sky-300 px-4">
-                <h1 class="text-xl font-semibold">Admin Dashboard</h1>
-                <div>
-                    <button class="focus:outline-none text-red-500" (click)="toggleSidePanel()">Toggle</button>
-                    <span class="font-bold ml-2">{{user?.name}}</span>
+                <div class="flex items-center">
+                    <button class="focus:outline-none text-red-500 mr-2" (click)="toggleSidePanel()">
+                        <i class="fas fa-bars text-white hover:text-gray-500 text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-semibold">Admin Dashboard</h1>
+                </div>
+                <div class="flex items-center">
+                    <span class="font-bold mx-2">{{user?.name}}</span>
+                    <i class="fas fa-sign-out-alt cursor-pointer text-xl" (click)="doLogout()"></i>
                 </div>
                 <!-- Add any header elements here, such as user profile dropdown -->
             </div>
         </header>
         <!-- Content area -->
-        <div class="m-4 overflow-auto h-[85vh]">
+        <div class="m-4">
             <!-- Main content goes here -->
             <router-outlet></router-outlet>
         </div>
