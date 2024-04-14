@@ -11,7 +11,7 @@ let userSchema = new mongoose.Schema({
     role: { type: String, enum: ['User', 'Admin'], default: 'User', require: true },
     active: {
         type: Boolean,
-        default: false
+        default: true
     },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date }

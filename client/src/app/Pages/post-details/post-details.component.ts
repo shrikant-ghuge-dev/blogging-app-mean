@@ -5,6 +5,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-post-details',
@@ -19,7 +20,7 @@ export class PostDetailsComponent implements OnInit {
   comments: any;
   userComment: string = '';
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private postService: PostService, private route: ActivatedRoute, private toastr: ToastrService, private userService: UserService) {
     this.route.paramMap.subscribe(params => {
       // Get the dynamic segment from the route parameters
       this.postId = params.get('id');
@@ -39,7 +40,8 @@ export class PostDetailsComponent implements OnInit {
     if (!this.userComment) return;
 
     const payload = {
-      comment: this.userComment
+      comment: this.userComment,
+      userId: this.userService.getLoggedInUserId()
     }
     this.postService.addCommentOnPost(this.postId, payload).subscribe((res: any) => {
       this.comments.push(payload);

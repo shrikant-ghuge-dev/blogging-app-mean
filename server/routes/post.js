@@ -83,7 +83,7 @@ router.post('/:postId/comments', (req, res, next) => {
     const commentData = new Comment({
         comment: req.body.comment,
         postId: req.params.postId,
-        // userId: req.body.userId
+        userId: req.body.userId
     })
 
     commentData.save().then(response => {
@@ -146,7 +146,10 @@ router.get('/:postId', (req, res) => {
                 });
             }
 
-            Comment.find({ postId: req.params.postId })
+            Comment.find({ postId: req.params.postId }).populate({
+                path: 'userId',
+                select: '-password'
+            })
                 .then(comments => {
                     return res.status(200).json({
                         success: 1,

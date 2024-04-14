@@ -29,6 +29,7 @@
                 <div *ngFor="let comment of comments" class="bg-white shadow-md mt-4">
                     <div class="p-4">
                         <p>{{ comment.comment }}</p>
+                        <p class="text-right italic">-{{comment?.userId?.name}}</p>
                     </div>
                 </div>
             </ng-container>
