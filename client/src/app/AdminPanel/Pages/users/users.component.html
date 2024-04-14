@@ -50,10 +50,12 @@
                 <button class="text-indigo-600 hover:text-indigo-900 mr-2" (click)="updateUser(user)">
                     <i class="fa fa-edit text-lg"></i>
                 </button>
-                <button class="text-red-600 hover:text-red-900" (click)="deleteUser(user?._id)">
+                <button class="text-red-600 hover:text-red-900" (click)="deleteUserIconClicked(user?._id)">
                     <i class="fa fa-trash text-lg"></i>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
+
+<app-confirmation-popup [textMsg]="textMsg" [isPopupVisible]="isPopupVisible" (cancelBtnClick)="cancelBtnClick()" (btnClick)="onDeleteUser()"></app-confirmation-popup>

@@ -32,4 +32,9 @@ export class PostService {
   addCommentOnPost(postId: any, comment: any) {
     return this.http.post(`${environment.baseUrl}/api/v1/post/${postId}/comments`, comment);
   }
+
+  // Admin
+  deletePostByAdmin(postId: any) {
+    return this.http.delete(`${environment.baseUrl}/api/v1/admin/post/${postId}`);
+  }
 }

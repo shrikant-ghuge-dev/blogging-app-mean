@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { PostService } from '../../../Services/post.service';
+import { UserService } from '../../../Services/user.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -13,6 +15,8 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class AdminHomeComponent {
   isSidePanelOpen: boolean = true;
+  postCount = 0;
+  userCount = 0;
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
@@ -23,6 +27,16 @@ export class AdminHomeComponent {
   }];
   public pieChartLegend = true;
   public pieChartPlugins = [];
+
+  constructor(private postService: PostService, private userService: UserService) {
+    this.postService.getAllPosts('', '').subscribe((res: any) => {
+      this.postCount = res?.data.length;
+    })
+
+    this.userService.getAllUsers().subscribe((res: any) => {
+      this.userCount = res?.data.length;
+    })
+  }
 
 
   toggleSidePanel(): void {

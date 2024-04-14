@@ -2,6 +2,8 @@ const express = require('express');
 const Category = require('../models/category');
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 const router = express.Router();
 
@@ -94,12 +96,36 @@ router.get('/users', async (req, res) => {
     }
 });
 
+router.delete('/user/:userId', async(req, res) => {
+    try {
+        const deletedUser = await User.deleteOne({ _id: req.params.userId });
+        if (deletedUser.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'User deleted successfully',
+            data: deletedUser
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete user',
+            error: error.message
+        });
+    }
+})
+
 // Delete post
 router.delete('/post/:postId', async (req, res) => {
     try {
         // Delete all comments associated with the post
         await Comment.deleteMany({ postId: req.params.postId });
-
+        
         // Delete the post
         const deletedPost = await Post.deleteOne({ _id: req.params.postId });
 

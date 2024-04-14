@@ -17,11 +17,25 @@ export class UserService {
     return this.http.get(`${environment.baseUrl}/api/v1/admin/users`);
   }
 
+  deleteUser(userId:any) {
+    return this.http.delete(`${environment.baseUrl}/api/v1/admin/user/${userId}`);
+  }
+
   getLoggedInUserId() {
     const userDataString = localStorage.getItem("User");
     if (userDataString !== null) {
       const userData = JSON.parse(userDataString);
       return userData._id || '';
+    } else {
+      return '';
+    }
+  }
+
+  getLoggedInUser() {
+    const userDataString = localStorage.getItem("User");
+    if (userDataString !== null) {
+      const userData = JSON.parse(userDataString);
+      return userData;
     } else {
       return '';
     }

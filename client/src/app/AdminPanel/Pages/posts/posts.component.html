@@ -46,10 +46,13 @@
                 <button class="text-indigo-600 hover:text-indigo-900 mr-2">
                     <i class="fa fa-edit text-lg"></i>
                 </button>
-                <button class="text-red-600 hover:text-red-900">
+                <button class="text-red-600 hover:text-red-900" (click)="deletePost(post?._id)">
                     <i class="fa fa-trash text-lg"></i>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
+
+<app-confirmation-popup [textMsg]="textMsg" [isPopupVisible]="isPopupVisible"
+    (btnClick)="onDeletePost()" (cancelBtnClick)="cancelBtnClick()"></app-confirmation-popup>

@@ -84,7 +84,10 @@
         <header class="bg-white shadow">
             <div class="flex justify-between items-center h-14 text-white bg-sky-300 px-4">
                 <h1 class="text-xl font-semibold">Admin Dashboard</h1>
-                <button class="focus:outline-none text-red-500" (click)="toggleSidePanel()">Toggle</button>
+                <div>
+                    <button class="focus:outline-none text-red-500" (click)="toggleSidePanel()">Toggle</button>
+                    <span class="font-bold ml-2">{{user?.name}}</span>
+                </div>
                 <!-- Add any header elements here, such as user profile dropdown -->
             </div>
         </header>

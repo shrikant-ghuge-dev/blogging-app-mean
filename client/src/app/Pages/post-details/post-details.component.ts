@@ -30,6 +30,8 @@ export class PostDetailsComponent implements OnInit {
     this.postService.getPostDetails(this.postId).subscribe((res: any) => {
       this.postDetails = res?.data?.post;
       this.comments = res?.data?.comments;
+    }, error => {
+      this.toastr.error(error?.error?.message, 'Error')
     })
   }
 
