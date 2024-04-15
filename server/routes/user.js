@@ -65,6 +65,32 @@ router.put('/:userId', (req, res) => {
     })
 })
 
+router.patch('/:userId', (req, res) => {
+    const userData = {
+        name: req.body.name,
+        about: req.body.about
+    }
+
+    User.findByIdAndUpdate(req.params.userId, userData, { new: false }).select('-password').then(response => {
+        if (response === null || response.length === 0) {
+            return res.status(404).json({
+                success: 0,
+                message: 'User not found'
+            });
+        }
+        return res.status(200).json({
+            success: 1,
+            message: "User updated successfully!",
+            data: response
+        });
+    }).catch(err => {
+        res.status(500).json({
+            success: 0,
+            message: 'Internal server error'
+        });
+    })
+})
+
 router.delete('/:userId', (req, res) => {
     User.deleteOne({ _id: req.params.userId }).then(response => {
         if (response.deletedCount === 0) {

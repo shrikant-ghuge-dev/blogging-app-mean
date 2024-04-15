@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PostComponent } from '../post/post.component';
 import { PostService } from '../../Services/post.service';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../Services/common.service';
 
 @Component({
   selector: 'app-new-feed',
   standalone: true,
-  imports: [PostComponent, NgIf, NgFor],
+  imports: [PostComponent, CommonModule],
   templateUrl: './new-feed.component.html',
   styleUrl: './new-feed.component.scss'
 })

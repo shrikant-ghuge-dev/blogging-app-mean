@@ -1,1 +1,77 @@
-<p>side-panel works!</p>
+<!-- Side panel -->
+<div class="bg-gray-800 text-white overflow-hidden h-full"
+    [ngClass]="{'translate-x-0': isSidePanelOpen, '-translate-x-0 w-14': !isSidePanelOpen}">
+    <div class="p-4">
+        <h2 class="text-2xl font-semibold mb-4" *ngIf="isSidePanelOpen">Blogging</h2>
+        <h2 class="text-2xl font-semibold mb-4" *ngIf="!isSidePanelOpen">B</h2>
+
+        <!-- Sidebar links -->
+        <ul class="mt-4">
+            <ng-container *ngIf="isSidePanelOpen; else iconsOnly">
+                <li class="mb-2 flex items-center">
+
+                    <a href="#" routerLink="/admin/home" routerLinkActive="selected"
+                        class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
+                        <span class="mr-2">
+                            <i class="fas fa-chart-line"></i>
+                        </span>Dashboard
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                        routerLink="/admin/users">
+                        <span class="mr-2">
+                            <i class="fas fa-users"></i>
+                        </span>Users
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                        routerLink="/admin/posts">
+                        <span class="mr-2">
+                            <i class="fas fa-file-alt"></i>
+                        </span>Posts
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
+                        routerLink="/admin/categories">
+                        <span class="mr-2">
+                            <i class="fas fa-cog"></i>
+                        </span>Categories
+                    </a>
+                </li>
+            </ng-container>
+            <ng-template #iconsOnly>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="my-2" routerLink="/admin/home" routerLinkActive="selected">
+                        <span class="mr-2">
+                            <i class="hover:text-yellow-600 fas fa-chart-line"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="my-2" routerLink="/admin/users" routerLinkActive="selected">
+                        <span class="mr-2">
+                            <i class="hover:text-yellow-600 fas fa-users"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="my-2" routerLink="/admin/posts" routerLinkActive="selected">
+                        <span class="mr-2">
+                            <i class="hover:text-yellow-600 fas fa-file-alt"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="mb-2 flex items-center">
+                    <a href="#" class="my-2" routerLink="/admin/categories" routerLinkActive="selected">
+                        <span class="mr-2">
+                            <i class="hover:text-yellow-600 fas fa-cog"></i>
+                        </span>
+                    </a>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>

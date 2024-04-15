@@ -1,13 +1,14 @@
-import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from '../../../Services/user.service';
 import { AuthService } from '../../../Services/auth.service';
+import { SidePanelComponent } from '../side-panel/side-panel.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [RouterOutlet, NgIf, NgClass, NgStyle, RouterModule],
+  imports: [RouterOutlet, CommonModule, RouterModule, SidePanelComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -28,7 +29,6 @@ export class AdminComponent {
     localStorage.removeItem('Token');
     this.authService.logout();
     this.router.navigate(['/signin'])
-    // this.isLoggedIn = false;
   }
 
 }

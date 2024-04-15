@@ -33,8 +33,34 @@
                 </tbody>
             </table>
             <div *ngIf="loggedInUserId && loggedInUserId === userId" class="text-center mt-6">
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded">Update Profile</button>
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded" (click)="OnUpdateBtn()">Update Profile</button>
             </div>
         </div>
+    </div>
+</div>
+
+<div *ngIf="isUpdateUserPopupVisible" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h3 class="text-xl font-semibold mb-4">Update User Details</h3>
+        <form [formGroup]="updateUserForm" (ngSubmit)="onUpdateUser()">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Name</label>
+                <input type="text" id="username" formControlName="name"
+                    class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Name" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">About</label>
+                <input type="text" id="password" formControlName="about"
+                    class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="About" />
+            </div>
+            <div class="text-center">
+                <button class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 mr-2 rounded"
+                    type="submit">Update</button>
+                <button (click)="togglePopup()"
+                    class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none">Cancel</button>
+            </div>
+        </form>
     </div>
 </div>
