@@ -6,7 +6,7 @@ const allowGetWithoutAuth = (req, res, next) => {
     if (req.originalUrl.includes('admin')) {
         // If it's a GET request, allow it to proceed without authentication
         // return next();
-        console.log('admin')
+        // console.log('admin')
     }
     if (req.method === 'GET') {
         // If it's a GET request, allow it to proceed without authentication
