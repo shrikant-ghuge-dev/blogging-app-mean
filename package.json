@@ -1,5 +1,5 @@
 {
-    "name": "blogging-mern-app",
+    "name": "blogging-mean-app",
     "version": "1.0.0",
     "description": "Blogging app where user can post blogs.",
     "main": "index.js",
