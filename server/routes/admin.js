@@ -34,7 +34,6 @@ router.post('/category', async (req, res) => {
             data: savedCategory
         });
     } catch (error) {
-        console.error(error);
         res.status(500).json({
             success: false,
             message: 'Failed to create category',

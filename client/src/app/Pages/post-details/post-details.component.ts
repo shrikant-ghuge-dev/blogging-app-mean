@@ -22,7 +22,6 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(private postService: PostService, private route: ActivatedRoute, private toastr: ToastrService, private userService: UserService) {
     this.route.paramMap.subscribe(params => {
-      // Get the dynamic segment from the route parameters
       this.postId = params.get('id');
     });
   }

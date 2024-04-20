@@ -14,6 +14,7 @@ import { AdminComponent } from './AdminPanel/Components/admin/admin.component';
 import { PostsComponent } from './AdminPanel/Pages/posts/posts.component';
 import { CategoriesComponent } from './AdminPanel/Pages/categories/categories.component';
 import { adminGuard } from './Guards/admin.guard';
+import { UserDetailsComponent } from './AdminPanel/Pages/user-details/user-details.component';
 
 export const routes: Routes = [
     {
@@ -79,7 +80,11 @@ export const routes: Routes = [
             {
                 path: 'categories',
                 component: CategoriesComponent,
-            }
+            },
+            {
+                path: 'user/details',
+                component: UserDetailsComponent,
+            },
         ]
     },
     {

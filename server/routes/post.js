@@ -65,7 +65,6 @@ router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), 
 },
     // multer Error Handling
     (error, req, res, next) => {
-        console.log("str1", error);
         next(res.status(400).send({
             message: error.message
         }))
@@ -160,7 +159,6 @@ router.get('/:postId', (req, res) => {
                     });
                 })
                 .catch(commentErr => {
-                    console.log(commentErr);
                     return res.status(500).json({
                         success: 0,
                         message: "An error occurred while fetching comments."
@@ -168,7 +166,6 @@ router.get('/:postId', (req, res) => {
                 });
         })
         .catch(postErr => {
-            console.log(postErr);
             return res.status(500).json({
                 success: 0,
                 message: "An error occurred while fetching post."

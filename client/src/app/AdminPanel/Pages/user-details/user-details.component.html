@@ -1,0 +1,26 @@
+<div class=" bg-white shadow-md mb-4 p-4">
+    <div class="flex justify-between items-center">
+        <h2 class="text-lg mb-4 font-bold">User Details</h2>
+        <button type="button" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Update User</button>
+    </div>
+    <div class="flex items-center py-3">
+        <div class="w-1/4 font-semibold">Name</div>
+        <div class="w-3/4">{{userData?.name}}</div>
+    </div>
+    <div class="flex items-center py-3">
+        <div class="w-1/4 font-semibold">Email</div>
+        <div class="w-3/4">{{userData?.email}}</div>
+    </div>
+    <div class="flex items-center py-3">
+        <div class="w-1/4 font-semibold">About</div>
+        <div class="w-3/4">{{userData?.about}}</div>
+    </div>
+    <div class="flex items-center py-3">
+        <div class="w-1/4 font-semibold">Role</div>
+        <div class="w-3/4">{{userData?.role}}</div>
+    </div>
+    <div class="flex items-center py-3">
+        <div class="w-1/4 font-semibold">Status</div>
+        <div class="w-3/4">{{userData?.active ? 'Active' : 'Deactive'}}</div>
+    </div>
+</div>

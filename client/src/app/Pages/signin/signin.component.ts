@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SigninComponent {
   signInForm!: FormGroup;
+  private accessTokenExpiration!: number;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.signInForm = this.fb.group({
@@ -28,9 +29,25 @@ export class SigninComponent {
       this.authService.checkAuthenticated();
       this.authService.verifyRoleAndNavigate(res.token);
       this.toastr.success(res?.message, "Success");
+      this.accessTokenExpiration = res.expires_in; // Expiration time in seconds
+      this.startSessionTimer();
     }, error => {
       this.toastr.error(error?.error?.message, 'Error')
     })
+  }
+
+  startSessionTimer() {
+    const expirationTime = this.accessTokenExpiration * 1000; // Convert seconds to milliseconds
+    setTimeout(() => {
+      this.doLogout();
+    }, expirationTime);
+  }
+
+  doLogout(): void {
+    localStorage.removeItem('User');
+    localStorage.removeItem('Token');
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

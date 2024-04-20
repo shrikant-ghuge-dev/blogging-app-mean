@@ -25,14 +25,17 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ success: 0, message: 'Invalid password!' });
         }
 
+        // Calculate token expiration time
+        const expiresIn = 3600;
+
         // Create and sign JWT
-        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn });
 
         // Exclude password field from user object
         const { password: userPassword, ...userData } = user.toObject();
 
         // Send token in response
-        return res.status(200).json({ success: 1, message: 'Login successful.', user: userData, token });
+        return res.status(200).json({ success: 1, message: 'Login successful.', user: userData, token, expires_in: expiresIn });
 
     } catch (error) {
         return res.status(500).json({ success: 0, message: 'Internal server error.' });
@@ -163,7 +166,6 @@ router.post('/reset-password', async (req, res) => {
 });
 
 async function sendPasswordResetConfirmationEmail(email) {
-    console.log(email, "success")
     // Define email content
     const mailOptions = {
         from: 'shreeghuge1@gmail.com',

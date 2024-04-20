@@ -3,6 +3,7 @@ import { UserService } from '../../../Services/user.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopupComponent } from '../../Components/confirmation-popup/confirmation-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,7 @@ export class UsersComponent {
   isPopupVisible: boolean = false;
   textMsg = "";
 
-  constructor(private userService: UserService, private toastr: ToastrService) {
+  constructor(private userService: UserService, private toastr: ToastrService, private router: Router) {
     this.userService.getAllUsers().subscribe((res: any) => {
       this.userList = res?.data;
     })
@@ -36,16 +37,28 @@ export class UsersComponent {
     });
   }
 
-  updateUser(user: any) {
-    this.userService.userActivateDeactivate(user._id, { active: true }).subscribe((res:any) => {
+  // updateUser(user: any) {
+  //   this.userService.userActivateDeactivate(user._id, { active: true }).subscribe((res:any) => {
+  //     this.toastr.success(res?.message, 'Success')
+  //   }, error => {
+  //     this.toastr.error(error?.error?.message, 'Error')
+  //   })
+  // }
+
+  cancelBtnClick() {
+    this.isPopupVisible = false;
+  }
+
+  onActiveDeactiveToggle(e: any, userId:any) {
+    this.userService.userActivateDeactivate(userId, { active: e.target.checked }).subscribe((res: any) => {
       this.toastr.success(res?.message, 'Success')
     }, error => {
       this.toastr.error(error?.error?.message, 'Error')
     })
   }
 
-  cancelBtnClick() {
-    this.isPopupVisible = false;
+  onUserDetails(userId: any) {
+    this.router.navigate(['admin/user/details'], { queryParams: { id: userId } })
   }
 
 }
