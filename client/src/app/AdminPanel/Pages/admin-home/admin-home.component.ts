@@ -21,12 +21,16 @@ export class AdminHomeComponent {
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
-  public pieChartLabels = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
-  public pieChartDatasets = [{
-    data: [300, 500, 100]
+  public pieChartLabels = [['Active Users'], ['Inactive Users']];
+  public pieChartDatasets: any[] = [{ data: [], label: 'User Status' }];
+  public postPieChartLabels = [['Posts'], ['Deleted Posts']];
+  public postPieChartDatasets = [{
+    data: [400, 600]
   }];
   public pieChartLegend = true;
   public pieChartPlugins = [];
+  activeUserCount: number = 0;
+  inactiveUserCount: number = 0;
 
   constructor(private postService: PostService, private userService: UserService) {
     this.postService.getAllPosts('', '').subscribe((res: any) => {
@@ -35,6 +39,18 @@ export class AdminHomeComponent {
 
     this.userService.getAllUsers().subscribe((res: any) => {
       this.userCount = res?.data.length;
+      res.data.forEach((user:any) => {
+        if (user.active) {
+          this.activeUserCount += 1;
+          
+          this.pieChartDatasets = [{
+          }];
+        } else {
+          this.inactiveUserCount += 1;
+        }
+      });
+      // Update pie chart datasets
+      this.pieChartDatasets[0].data = [this.activeUserCount, this.inactiveUserCount];
     })
   }
 

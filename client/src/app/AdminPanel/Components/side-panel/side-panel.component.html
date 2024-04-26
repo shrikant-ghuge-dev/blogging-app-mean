@@ -2,13 +2,13 @@
 <div class="bg-gray-800 text-white overflow-hidden h-full"
     [ngClass]="{'translate-x-0': isSidePanelOpen, '-translate-x-0 w-14': !isSidePanelOpen}">
     <div class="p-4">
-        <h2 class="text-2xl font-semibold mb-4" *ngIf="isSidePanelOpen">Blogging</h2>
+        <h2 class="text-2xl font-semibold mb-4" *ngIf="isSidePanelOpen"><i class="fa fa-blog text-2xl"></i> Blogging</h2>
         <h2 class="text-2xl font-semibold mb-4" *ngIf="!isSidePanelOpen">B</h2>
 
         <!-- Sidebar links -->
-        <ul class="mt-4">
+        <ul class="mt-6">
             <ng-container *ngIf="isSidePanelOpen; else iconsOnly">
-                <li class="mb-2 flex items-center">
+                <li class="mb-2 flex items-center w-[168px]">
 
                     <a href="#" routerLink="/admin/home" routerLinkActive="selected"
                         class="block py-2 px-4 rounded hover:bg-gray-700 w-full">
@@ -17,7 +17,7 @@
                         </span>Dashboard
                     </a>
                 </li>
-                <li class="mb-2 flex items-center">
+                <li class="mb-2 flex items-center w-[168px]">
                     <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
                         routerLink="/admin/users">
                         <span class="mr-2">
@@ -25,7 +25,7 @@
                         </span>Users
                     </a>
                 </li>
-                <li class="mb-2 flex items-center">
+                <li class="mb-2 flex items-center w-[168px]">
                     <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
                         routerLink="/admin/posts">
                         <span class="mr-2">
@@ -33,7 +33,7 @@
                         </span>Posts
                     </a>
                 </li>
-                <li class="mb-2 flex items-center">
+                <li class="mb-2 flex items-center w-[168px]">
                     <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 w-full" routerLinkActive="selected"
                         routerLink="/admin/categories">
                         <span class="mr-2">
@@ -44,28 +44,28 @@
             </ng-container>
             <ng-template #iconsOnly>
                 <li class="mb-2 flex items-center">
-                    <a href="#" class="my-2" routerLink="/admin/home" routerLinkActive="selected">
+                    <a href="#" class="my-2" routerLink="/admin/home" routerLinkActive="text-yellow-600">
                         <span class="mr-2">
                             <i class="hover:text-yellow-600 fas fa-chart-line"></i>
                         </span>
                     </a>
                 </li>
                 <li class="mb-2 flex items-center">
-                    <a href="#" class="my-2" routerLink="/admin/users" routerLinkActive="selected">
+                    <a href="#" class="my-2" routerLink="/admin/users" routerLinkActive="text-yellow-600">
                         <span class="mr-2">
                             <i class="hover:text-yellow-600 fas fa-users"></i>
                         </span>
                     </a>
                 </li>
                 <li class="mb-2 flex items-center">
-                    <a href="#" class="my-2" routerLink="/admin/posts" routerLinkActive="selected">
+                    <a href="#" class="my-2" routerLink="/admin/posts" routerLinkActive="text-yellow-600">
                         <span class="mr-2">
                             <i class="hover:text-yellow-600 fas fa-file-alt"></i>
                         </span>
                     </a>
                 </li>
                 <li class="mb-2 flex items-center">
-                    <a href="#" class="my-2" routerLink="/admin/categories" routerLinkActive="selected">
+                    <a href="#" class="my-2" routerLink="/admin/categories" routerLinkActive="text-yellow-600">
                         <span class="mr-2">
                             <i class="hover:text-yellow-600 fas fa-cog"></i>
                         </span>
