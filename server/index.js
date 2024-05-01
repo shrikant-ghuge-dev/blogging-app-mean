@@ -11,7 +11,7 @@ const adminRoute = require('./routes/admin')
 // To read the body from the requests
 const bodyParser = require('body-parser');
 const connectToMongoDB = require('./helper/db');
-const { allowGetWithoutAuth, verifyAuthorization } = require('./middlewares/authMiddleware');
+const { allowGetWithoutAuth, verifyAuthorization, adminAuthentication } = require('./middlewares/authMiddleware');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 
 // database
@@ -37,7 +37,7 @@ app.use('/api/v1/user', allowGetWithoutAuth, userRoute)
 
 app.use('/api/v1/category', allowGetWithoutAuth, categoryRoute)
 
-app.use('/api/v1/admin', adminRoute)
+app.use('/api/v1/admin', adminAuthentication, verifyAuthorization("Admin"), adminRoute)
 // app.use('/api/v1/admin', allowGetWithoutAuth, verifyAuthorization("Admin"), adminRoute)
 
 app.use(errorHandler);

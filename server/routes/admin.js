@@ -3,13 +3,18 @@ const Category = require('../models/category');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Post = require('../models/post');
-const Comment = require('../models/comment');
+const Comment = require('../models/comment'); 
 
 const router = express.Router();
 
 
-router.get('', (req, res) => {
-    res.json({ message: "working" })
+router.get('/category', (req, res) => {
+    Category.find({}).then(response => {
+        res.status(200).json({
+            success: 1,
+            data: response
+        })
+    }).catch(error => console.log(error))
 })
 
 
@@ -71,7 +76,6 @@ router.delete('/category/:catId', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        // Fetch all users except the password field
         const users = await User.find({}).select('-password');
 
         if (!users || users.length === 0) {
@@ -149,6 +153,40 @@ router.delete('/post/:postId', async (req, res) => {
     }
 });
 
+router.get('/post', async (req, res) => {
+    const { searchTerm, catId } = req.query;
+    let query = {};
+
+    if (searchTerm) {
+        query = {
+            $or: [
+                { title: { $regex: searchTerm, $options: 'i' } },
+            ]
+        };
+    }
+
+    if (catId) {
+        query.categoryId = catId;
+    }
+
+    try {
+        const posts = await Post.find(query)
+            .populate("userId", "-password")
+            .populate("categoryId")
+            .select('-password');
+
+        return res.status(200).json({
+            success: 1,
+            data: posts
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: 0,
+            message: "Internal server error"
+        });
+    }
+});
+
 router.put('/user/:userId/status', async (req, res) => {
     const userId = req.params.userId;
     const { active } = req.body;
@@ -168,6 +206,27 @@ router.put('/user/:userId/status', async (req, res) => {
         return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
+router.get('/user/:userId', (req, res) => {
+    User.find({ _id: req.params.userId }).select('-password').then(user => {
+        if (user.length === 0) {
+            return res.status(404).json({
+                success: 0,
+                message: 'User not found'
+            });
+        }
+
+        res.status(200).json({
+            success: 1,
+            data: user
+        })
+    }).catch(error => {
+        res.status(500).json({
+            success: 0,
+            message: 'Internal server error'
+        });
+    })
+})
 
 
 module.exports = router

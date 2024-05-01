@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { PostService } from '../../../Services/post.service';
-import { UserService } from '../../../Services/user.service';
+import { AdminService } from '../../Services/admin.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -32,12 +31,12 @@ export class AdminHomeComponent {
   activeUserCount: number = 0;
   inactiveUserCount: number = 0;
 
-  constructor(private postService: PostService, private userService: UserService) {
-    this.postService.getAllPosts('', '').subscribe((res: any) => {
+  constructor(private adminService: AdminService) {
+    this.adminService.getAllPosts('', '').subscribe((res: any) => {
       this.postCount = res?.data.length;
     })
 
-    this.userService.getAllUsers().subscribe((res: any) => {
+    this.adminService.getAllUsers().subscribe((res: any) => {
       this.userCount = res?.data.length;
       res.data.forEach((user:any) => {
         if (user.active) {

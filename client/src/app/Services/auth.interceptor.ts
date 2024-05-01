@@ -14,13 +14,15 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
     // Show loader before sending the request
     loaderService.showLoader();
 
-    if (req.method === "GET" || req.url.includes('/api/v1/auth/login') || req.url.includes('/api/v1/auth/register') || req.url.includes('/api/v1/auth/forgot-password') || req.url.includes('/api/v1/auth/reset-password')) {
-        return next(req).pipe(
-            finalize(() => {
-                // Hide loader when the response is received
-                loaderService.hideLoader();
-            })
-        )
+    if (!req.url.includes('/admin')) {
+        if (req.method === "GET" || req.url.includes('/api/v1/auth/login') || req.url.includes('/api/v1/auth/register') || req.url.includes('/api/v1/auth/forgot-password') || req.url.includes('/api/v1/auth/reset-password')) {
+            return next(req).pipe(
+                finalize(() => {
+                    // Hide loader when the response is received
+                    loaderService.hideLoader();
+                })
+            )
+        }
     }
 
     // Clone the request to add the authentication header.

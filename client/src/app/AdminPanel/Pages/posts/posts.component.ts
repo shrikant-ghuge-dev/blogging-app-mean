@@ -3,6 +3,7 @@ import { PostService } from '../../../Services/post.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopupComponent } from '../../Components/confirmation-popup/confirmation-popup.component';
+import { AdminService } from '../../Services/admin.service';
 
 @Component({
   selector: 'app-posts',
@@ -17,8 +18,8 @@ export class PostsComponent {
   isPopupVisible: boolean = false;
   textMsg = "";
 
-  constructor(private postService: PostService, private toastr: ToastrService) {
-    this.postService.getAllPosts('', '').subscribe((res: any) => {
+  constructor(private adminService: AdminService, private toastr: ToastrService) {
+    this.adminService.getAllPosts('', '').subscribe((res: any) => {
       this.postList = res?.data;
     })
   }
@@ -29,7 +30,7 @@ export class PostsComponent {
   }
 
   onDeletePost() {
-    this.postService.deletePostByAdmin(this.postId).subscribe((res: any) => {
+    this.adminService.deletePostByAdmin(this.postId).subscribe((res: any) => {
       this.postList = this.postList.filter((post: any) => post._id !== this.postId);
       this.isPopupVisible = false;
       this.toastr.success(res?.message, 'Success')

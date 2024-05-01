@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../../Services/user.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopupComponent } from '../../Components/confirmation-popup/confirmation-popup.component';
 import { Router } from '@angular/router';
+import { AdminService } from '../../Services/admin.service';
 
 @Component({
   selector: 'app-users',
@@ -18,8 +18,8 @@ export class UsersComponent {
   isPopupVisible: boolean = false;
   textMsg = "";
 
-  constructor(private userService: UserService, private toastr: ToastrService, private router: Router) {
-    this.userService.getAllUsers().subscribe((res: any) => {
+  constructor(private adminService: AdminService, private toastr: ToastrService, private router: Router) {
+    this.adminService.getAllUsers().subscribe((res: any) => {
       this.userList = res?.data;
     })
   }
@@ -30,7 +30,7 @@ export class UsersComponent {
   }
 
   onDeleteUser() {
-    this.userService.deleteUser(this.userId).subscribe((res: any) => {
+    this.adminService.deleteUser(this.userId).subscribe((res: any) => {
       this.userList = this.userList.filter((user: any) => user._id !== this.userId);
       this.isPopupVisible = false;
       this.toastr.success(res?.message, 'Success')
@@ -50,7 +50,7 @@ export class UsersComponent {
   }
 
   onActiveDeactiveToggle(e: any, userId:any) {
-    this.userService.userActivateDeactivate(userId, { active: e.target.checked }).subscribe((res: any) => {
+    this.adminService.userActivateDeactivate(userId, { active: e.target.checked }).subscribe((res: any) => {
       this.toastr.success(res?.message, 'Success')
     }, error => {
       this.toastr.error(error?.error?.message, 'Error')

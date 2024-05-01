@@ -13,20 +13,8 @@ export class UserService {
     return this.http.get(`${environment.baseUrl}/api/v1/user/${userId}`);
   }
 
-  getAllUsers() {
-    return this.http.get(`${environment.baseUrl}/api/v1/admin/users`);
-  }
-
-  deleteUser(userId:any) {
-    return this.http.delete(`${environment.baseUrl}/api/v1/admin/user/${userId}`);
-  }
-
   updateUser(userId: any, userData:any) {
     return this.http.patch(`${environment.baseUrl}/api/v1/user/${userId}`, userData);
-  }
-
-  userActivateDeactivate(userId: any, status:any) {
-    return this.http.put(`${environment.baseUrl}/api/v1/admin/user/${userId}/status`, status);
   }
 
   getLoggedInUserId() {
