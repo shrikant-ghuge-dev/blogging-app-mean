@@ -8,6 +8,7 @@ let userSchema = new mongoose.Schema({
     password: { type: String, required: [true, 'Please enter a password.'], },
     name: { type: String, required: [true, 'Please enter your name.'] },
     about: { type: String, require: true },
+    image: { type: String},
     role: { type: String, enum: ['User', 'Admin'], default: 'User', require: true },
     active: {
         type: Boolean,

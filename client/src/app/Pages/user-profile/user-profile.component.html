@@ -2,9 +2,9 @@
     <div class="mt-5 shadow-md">
         <div class="p-6">
             <h3 class="text-xl font-bold mb-4">User Details</h3>
-            <div class="text-center">
-                <img [src]="user?.image ? user?.image : 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg'"
-                    alt="User Image" class="max-w-150 max-h-150 rounded-full mx-auto mb-6 w-60">
+            <div class="flex justify-center items-center ">
+                <img [src]="getImageUrl(user?.image)" alt="User Image"
+                    class="w-[170px] h-[170px] rounded-[5.5rem] mx-auto mb-6 border border-solid border-gray-500">
             </div>
             <table class="w-full text-center border-collapse">
                 <tbody>
@@ -33,16 +33,32 @@
                 </tbody>
             </table>
             <div *ngIf="loggedInUserId && loggedInUserId === userId" class="text-center mt-6">
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded" (click)="OnUpdateBtn()">Update Profile</button>
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded"
+                    (click)="OnUpdateBtn()">Update Profile</button>
             </div>
         </div>
     </div>
 </div>
 
-<div *ngIf="isUpdateUserPopupVisible" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+<div *ngIf="isUpdateUserPopupVisible"
+    class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h3 class="text-xl font-semibold mb-4">Update User Details</h3>
         <form [formGroup]="updateUserForm" (ngSubmit)="onUpdateUser()">
+            <div class="text-center" *ngIf="!imagePreview">
+                    <!-- padding: 20px 30px;
+                    border: 1px solid;
+                    border-radius: 20px; -->
+                <label for="image" class="inline-block cursor-pointer py-3 px-5 border rounded-md" *ngIf="!imagePreview">
+                    <i class="fa fa-upload text-2xl"></i>
+                </label>
+                <input id="image" type="file" class="relative left-0 top-0 opacity-0 w-0"
+                    (change)="fileChangeHandler($event)" />
+            </div>
+            <div class="w-[170px] h-[170px] relative left-10" *ngIf="imagePreview">
+                <img class="w-full h-full rounded-[5.5rem] border" [src]="imagePreview" alt="Image Preview" />
+            </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Name</label>
                 <input type="text" id="username" formControlName="name"

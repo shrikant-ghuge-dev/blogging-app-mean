@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,6 +19,9 @@ export class UserProfileComponent implements OnInit {
   loggedInUserId: any;
   isUpdateUserPopupVisible: boolean = false;
   updateUserForm!: FormGroup;
+  userProfile!: any;
+  imagePreview: string | ArrayBuffer | null = null;
+  showUploadIcon: boolean = true;
 
   constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder, private toastr: ToastrService) {
     this.updateUserForm = this.fb.group({
@@ -56,13 +60,40 @@ export class UserProfileComponent implements OnInit {
   }
 
   onUpdateUser() {
-    this.userService.updateUser(this.userId, this.updateUserForm.value).subscribe((res:any) => {
+    const formData = new FormData();
+    formData.append('title', this.updateUserForm.controls['name'].value);
+    formData.append('content', this.updateUserForm.controls['about'].value);
+    formData.append('image', this.userProfile);
+
+    this.userService.updateUser(this.userId, formData).subscribe((res: any) => {
       this.getUserDetails();
       this.isUpdateUserPopupVisible = false;
       this.toastr.success(res?.message, "Success");
     }, error => {
       this.toastr.error(error?.error?.message, "Error");
     })
-   }
+  }
+
+  fileChangeHandler(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    this.userProfile = fileInput.files?.[0];
+
+    if (this.userProfile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+        this.showUploadIcon = false;
+      };
+      reader.readAsDataURL(this.userProfile);
+    }
+  }
+
+  getImageUrl(imageName: string): string {
+    if (imageName) {
+      const parts = imageName.split('\\');
+      return `${environment.baseUrl}/${parts[1]}`;
+    }
+    return `${environment.baseUrl}/2024-05-01_120225profile.png`;
+  }
 
 }

@@ -1,6 +1,38 @@
 const express = require('express')
 const User = require('../models/user')
 const router = express.Router()
+// Image upload
+var multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
+    filename: function (req, file, cb) {
+        // Get the current date and time
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+        const currentTime = currentDate.toTimeString().slice(0, 8).replace(/:/g, ''); // Format: HHMMSS
+        // Generate the new filename with date and time
+        const newFilename = `${formattedDate}_${currentTime}${file.originalname}`;
+        cb(null, newFilename);
+    }
+})
+var upload = multer({
+    storage: storage,
+    limits: {
+        // Setting Image Size Limit to 2MBs
+        fileSize: 2000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            //Error 
+            cb(new Error('Please upload JPG and PNG images only!'))
+        }
+        //Success 
+        cb(undefined, true)
+    }
+})
 
 router.get('/:userId', (req, res) => {
     User.find({ _id: req.params.userId }).select('-password').then(user => {
@@ -65,10 +97,13 @@ router.put('/:userId', (req, res) => {
     })
 })
 
-router.patch('/:userId', (req, res) => {
+router.patch('/:userId', upload.single('image'), (req, res) => {
+    const imagePath = req?.file?.path;
+
     const userData = {
         name: req.body.name,
-        about: req.body.about
+        about: req.body.about,
+        image: imagePath,
     }
 
     User.findByIdAndUpdate(req.params.userId, userData, { new: false }).select('-password').then(response => {
