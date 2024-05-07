@@ -38,18 +38,22 @@ export class AdminHomeComponent {
 
     this.adminService.getAllUsers().subscribe((res: any) => {
       this.userCount = res?.data.length;
-      res.data.forEach((user:any) => {
+      res.data.forEach((user: any) => {
         if (user.active) {
           this.activeUserCount += 1;
-          
+
           this.pieChartDatasets = [{
           }];
         } else {
           this.inactiveUserCount += 1;
         }
       });
+
       // Update pie chart datasets
       this.pieChartDatasets[0].data = [this.activeUserCount, this.inactiveUserCount];
+    })
+    this.adminService.getAllComments().subscribe(comment => {
+      console.log(comment)
     })
   }
 

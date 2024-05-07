@@ -48,4 +48,9 @@ export class AdminService {
   getUserProfile(userId: any) {
     return this.http.get(`${environment.baseUrl}/api/v1/admin/user/${userId}`);
   }
+
+  // Comments
+  getAllComments() {
+    return this.http.get(`${environment.baseUrl}/api/v1/admin/comments`);
+  }
 }

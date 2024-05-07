@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { QuillConfigModule, QuillModule } from 'ngx-quill';
 import { CategoryService } from '../../Services/category.service';
@@ -7,12 +7,13 @@ import { PostService } from '../../Services/post.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../Services/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { QuillConfigModule, QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-add-post',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule,
-    // QuillConfigModule, QuillModule 
+    QuillConfigModule, QuillModule
   ],
   templateUrl: './add-post.component.html',
   styleUrl: './add-post.component.scss'
@@ -25,6 +26,18 @@ export class AddPostComponent {
   image!: File;
   postId!: string;
   postDetails: any;
+  @ViewChild('editor') editor: any;
+
+  name = 'Angular';
+  modules = {
+    formula: true,
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['formula'],
+      ['image', 'code-block']
+    ]
+  };
 
   constructor(private fb: FormBuilder, private catService: CategoryService, private userService: UserService,
     private postService: PostService, private toastr: ToastrService, private route: ActivatedRoute) {

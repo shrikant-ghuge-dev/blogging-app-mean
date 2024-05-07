@@ -3,6 +3,13 @@
         <div class="w-full md:w-1/2 mx-auto">
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h3 class="text-xl font-semibold mb-4">Login</h3>
+                <div id="g_id_onload" data-client_id="300669355665-ajm81negr3cqr61v915tj9dlaqvrf77h.apps.googleusercontent.com"
+                    data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:4200/home" data-auto_prompt="false">
+                </div>
+                
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with"
+                    data-size="large" data-logo_alignment="left">
+                </div>
                 <form [formGroup]="signInForm" (ngSubmit)="submitHandler()">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Enter Email</label>

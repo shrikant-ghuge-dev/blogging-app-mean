@@ -1,5 +1,5 @@
-.ql-toolbar {
-    &.ql-snow {
-        display: none;
+::ng-deep {
+    .ql-editor {
+        height: 60vh;
     }
 }

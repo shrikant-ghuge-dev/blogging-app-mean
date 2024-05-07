@@ -99,13 +99,13 @@ router.put('/:userId', (req, res) => {
 
 router.patch('/:userId', upload.single('image'), (req, res) => {
     const imagePath = req?.file?.path;
-
+    
     const userData = {
         name: req.body.name,
         about: req.body.about,
         image: imagePath,
     }
-
+    
     User.findByIdAndUpdate(req.params.userId, userData, { new: false }).select('-password').then(response => {
         if (response === null || response.length === 0) {
             return res.status(404).json({

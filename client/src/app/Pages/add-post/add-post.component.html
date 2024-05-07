@@ -1,29 +1,31 @@
 <div class="wrapper bg-gray-100 min-h-screen flex justify-center items-center">
     <div class="w-full m-4">
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="bg-white shadow-md rounded px-12 pt-6 pb-8 mb-4">
             <h3 class="text-2xl font-bold mb-4">Post Blog</h3>
             <form [formGroup]="addPostForm" (ngSubmit)="onAddPost()">
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Post Title</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
                     <input type="text" id="title" name="title" class="form-control"
                         class="border border-solid border-gray-300 rounded-lg w-full p-2" placeholder="Title"
                         formControlName="title" (change)="fieldChange($event)" />
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Post Content</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Content</label>
                     <!-- <jodit-editor formControlName="content"></jodit-editor> -->
                     <!-- <quill-editor>
 
                     </quill-editor> -->
-                    <textarea name="content" class="border border-solid border-gray-300 rounded-lg w-full p-2"
-                        formControlName="content" id="" cols="30" rows="10"></textarea>
+                    <quill-editor [placeholder]="''" formControlName="content" style="display: block;"> </quill-editor>
+                    <!-- <ngx-quill #editor [modules]="modules" (contentChanged)="logChange($event);"></ngx-quill> -->
+                    <!-- <textarea name="content" class="border border-solid border-gray-300 rounded-lg w-full p-2"
+                        formControlName="content" id="" cols="30" rows="10"></textarea> -->
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Select Banner Image</label>
                     <input id="image" type="file" class="form-control-file" (change)="fileChangeHandler($event)" />
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Post Category</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Category</label>
                     <select id="categoryId" name="categoryId"
                         class="form-control border border-solid border-gray-300 rounded-lg w-full p-2"
                         (change)="fieldChange($event)" formControlName="categoryName">

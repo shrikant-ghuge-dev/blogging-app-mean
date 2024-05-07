@@ -61,8 +61,8 @@ export class UserProfileComponent implements OnInit {
 
   onUpdateUser() {
     const formData = new FormData();
-    formData.append('title', this.updateUserForm.controls['name'].value);
-    formData.append('content', this.updateUserForm.controls['about'].value);
+    formData.append('name', this.updateUserForm.controls['name'].value);
+    formData.append('about', this.updateUserForm.controls['about'].value);
     formData.append('image', this.userProfile);
 
     this.userService.updateUser(this.userId, formData).subscribe((res: any) => {

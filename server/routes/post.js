@@ -29,7 +29,7 @@ var upload = multer({
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
             //Error 
-            cb(new Error('Please upload JPG and PNG images only!'))
+            cb(new Error('Please upload JPG and JPEG images only!'))
         }
         //Success 
         cb(undefined, true)
@@ -44,7 +44,6 @@ router.post('/user/:userId/category/:categoryId/posts', upload.single('image'), 
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         content: req.body.content,
-        // category: req.body.category,
         image: imagePath,
         userId: req.params.userId,
         categoryId: req.params.categoryId

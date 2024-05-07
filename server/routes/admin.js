@@ -3,7 +3,7 @@ const Category = require('../models/category');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Post = require('../models/post');
-const Comment = require('../models/comment'); 
+const Comment = require('../models/comment');
 
 const router = express.Router();
 
@@ -219,6 +219,28 @@ router.get('/user/:userId', (req, res) => {
         res.status(200).json({
             success: 1,
             data: user
+        })
+    }).catch(error => {
+        res.status(500).json({
+            success: 0,
+            message: 'Internal server error'
+        });
+    })
+})
+
+// Comments
+router.get('/comments', (req, res) => {
+    Comment.find({}).then(comment => {
+        console.log(comment)
+        if (comment.length === 0) {
+            return res.status(404).json({
+                success: 0,
+                message: 'Comments not found'
+            });
+        }
+        res.status(200).json({
+            success: 1,
+            data: comment
         })
     }).catch(error => {
         res.status(500).json({

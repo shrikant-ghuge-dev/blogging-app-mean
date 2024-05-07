@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from '../../Services/post.service';
-import { ToastrService } from 'ngx-toastr';
 import { CommonModule, NgIf } from '@angular/common';
 import { UserService } from '../../Services/user.service';
 
@@ -17,7 +15,7 @@ export class PostComponent implements OnInit {
   @Output() postId: EventEmitter<any> = new EventEmitter<any>();
   loggedUserId: any;
 
-  constructor(private router: Router, private postService: PostService, private toastr: ToastrService, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
 
   ngOnInit(): void {
