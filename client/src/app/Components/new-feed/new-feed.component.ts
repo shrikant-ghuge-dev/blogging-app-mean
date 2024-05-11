@@ -43,7 +43,7 @@ export class NewFeedComponent implements OnInit {
 
   deleteHandlers(postId: any) {
     this.postService.deletePost(postId).subscribe((res: any) => {
-      this.toastr.success(res?.message, "success");
+      this.toastr.success(res?.message, "Success");
       this.posts = this.posts.filter((post: any) => post?._id !== postId)
     })
   }

@@ -28,15 +28,16 @@ export class ResetPasswordComponent {
 
   submitHandler() {
     if (this.resetForm.controls['password'].value !== this.resetForm.controls['confirmPassword'].value) {
-      this.toastr.error("Password mismatch!", "error");
+      this.toastr.error("Password mismatch!", "Error");
       return;
     }
     const payload = {
       password: this.resetForm.controls['password'].value,
       token: this.token
     };
-    this.authService.resetPassword(payload).subscribe(res => {
-      this.router.navigate(['/signin'])
+    this.authService.resetPassword(payload).subscribe((res: any) => {
+      this.router.navigate(['/signin']);
+      this.toastr.success(res.message, "Success");
     }, error => {
       this.toastr.error(error?.error.message, "error");
     })

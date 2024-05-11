@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopupComponent } from '../../Components/confirmation-popup/confirmation-popup.component';
 import { Router } from '@angular/router';
 import { AdminService } from '../../Services/admin.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-users',
@@ -49,7 +50,7 @@ export class UsersComponent {
     this.isPopupVisible = false;
   }
 
-  onActiveDeactiveToggle(e: any, userId:any) {
+  onActiveDeactiveToggle(e: any, userId: any) {
     this.adminService.userActivateDeactivate(userId, { active: e.target.checked }).subscribe((res: any) => {
       this.toastr.success(res?.message, 'Success')
     }, error => {
@@ -59,6 +60,14 @@ export class UsersComponent {
 
   onUserDetails(userId: any) {
     this.router.navigate(['admin/user/details'], { queryParams: { id: userId } })
+  }
+
+  getImageUrl(imageName: string): string {
+    if (imageName) {
+      const parts = imageName.split('\\');
+      return `${environment.baseUrl}/${parts[1]}`;
+    }
+    return `${environment.baseUrl}/2024-05-01_120225profile.png`;
   }
 
 }

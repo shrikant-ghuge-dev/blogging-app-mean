@@ -52,9 +52,9 @@ export class AdminHomeComponent {
       // Update pie chart datasets
       this.pieChartDatasets[0].data = [this.activeUserCount, this.inactiveUserCount];
     })
-    this.adminService.getAllComments().subscribe(comment => {
-      console.log(comment)
-    })
+    // this.adminService.getAllComments().subscribe(comment => {
+    //   console.log(comment)
+    // })
   }
 
 

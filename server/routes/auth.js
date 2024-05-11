@@ -94,7 +94,8 @@ router.post('/forgot-password', async (req, res) => {
 
     // Find user by email (replace with your database query)
     const user = await User.find({ email });
-    if (!user) {
+
+    if (!user || user.length === 0) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
 
@@ -114,7 +115,7 @@ router.post('/forgot-password', async (req, res) => {
         from: 'shreeghuge1@gmail.com', // replace with your email
         to: email,
         subject: 'Password Reset',
-        text: `Click the following link to reset your password: ${process.env.BASE_URL}/reset-password?token=${token}`
+        text: `Click the following link to reset your password: ${process.env.CLIENT_BASE_URL}/reset-password?token=${token}`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -134,7 +135,7 @@ const generateToken = () => {
 
 // Route for handling password reset requests
 router.post('/reset-password', async (req, res) => {
-    const { token, newPassword } = req.body;
+    const { token, password } = req.body;
 
     // Validate token (check if it's valid and not expired)
     if (!token) {
@@ -154,7 +155,7 @@ router.post('/reset-password', async (req, res) => {
 
 
     // Update user's password with the new one
-    await updateUserPassword(user, newPassword);
+    await updateUserPassword(user, password);
 
     // Invalidate or expire the token
     invalidateToken(token);

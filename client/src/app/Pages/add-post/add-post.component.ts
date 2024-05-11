@@ -70,17 +70,17 @@ export class AddPostComponent {
 
     if (this.postId) {
       this.postService.updatePost(this.postId, formData).subscribe((res: any) => {
-        this.toastr.success(res?.message, "success");
+        this.toastr.success(res?.message, "Success");
         this.addPostForm.reset();
       }, error => {
-        this.toastr.error(error.error.message, "error");
+        this.toastr.error(error.error.message, "Error");
       })
     } else {
       this.postService.addPost(this.userId, this.categoryId, formData).subscribe((res: any) => {
-        this.toastr.success(res?.message, "success");
+        this.toastr.success(res?.message, "Success");
         this.addPostForm.reset();
       }, error => {
-        this.toastr.error(error.error.message, "error");
+        this.toastr.error(error.error.message, "Error");
       })
     }
 

@@ -11,6 +11,8 @@
                     class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                     Id
                 </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                </th>
                 <th scope="col"
                     class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                     Name
@@ -38,10 +40,21 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center justify-center">
-                        <div class="flex-shrink-0 h-10 w-10">
+                        <div class="flex-shrink-0 h-6 w-6">
                             <!-- User avatar or icon -->
-                            <img class="h-10 w-10 rounded-full" src="...">
+                            <!-- <img class="h-10 w-10 rounded-full" src="..."> -->
+                            <img [src]="getImageUrl(user?.image)" alt="User Image" class="w-full h-full rounded-[5.5rem] mx-auto">
                         </div>
+                        </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center justify-center">
+                        <!-- <div class="flex-shrink-0 h-6 w-6"> -->
+                            <!-- User avatar or icon -->
+                            <!-- <img class="h-10 w-10 rounded-full" src="..."> -->
+                            <!-- <img [src]="getImageUrl(user?.image)" alt="User Image"
+                                class="w-full h-full rounded-[5.5rem] mx-auto"> -->
+                        <!-- </div> -->
                         <div class="ml-4">
                             <!-- User name -->
                             <div class="text-sm font-medium text-gray-900">{{user?.name}}</div>
@@ -68,7 +81,8 @@
 
                     <!-- Edit and Delete buttons -->
                     <button class="text-indigo-600 hover:text-indigo-900 mr-2" (click)="onUserDetails(user?._id)">
-                        <i class="fa fa-edit text-lg"></i>
+                        <!-- <i class="fa fa-edit text-lg"></i> -->
+                        <i class="fa fa-info-circle text-lg"></i>
                     </button>
                     <button class="text-red-600 hover:text-red-900" (click)="deleteUserIconClicked(user?._id)">
                         <i class="fa fa-trash text-lg"></i>

@@ -49,7 +49,7 @@ const adminAuthentication = async (req, res, next) => {
     if (req.originalUrl == "/api/v1/auth/login") {
         next()
     }
-
+    
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
@@ -61,7 +61,7 @@ const adminAuthentication = async (req, res, next) => {
             next()
 
         } catch (error) {
-            res.status(401).json({ message: 'Unauthorized' });
+            res.status(401).json({ message: 'Unauthorized1' });
         }
 
         if (!token) {
@@ -73,6 +73,7 @@ const adminAuthentication = async (req, res, next) => {
 
 const verifyAuthorization = (role) => {
     return (req, res, next) => {
+        debugger
         console.log("first", req.user)
         // Check if the user is authenticated and has a role
         if (req.user && req.user.role) {

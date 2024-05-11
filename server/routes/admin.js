@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-
 const router = express.Router();
-
 
 router.get('/category', (req, res) => {
     Category.find({}).then(response => {
@@ -229,10 +227,10 @@ router.get('/user/:userId', (req, res) => {
 })
 
 // Comments
-router.get('/comments', (req, res) => {
-    Comment.find({}).then(comment => {
-        console.log(comment)
-        if (comment.length === 0) {
+router.get('/comments', async (req, res) => {
+    try {
+        const comments = await Comment.find({});
+        if (comments.length === 0) {
             return res.status(404).json({
                 success: 0,
                 message: 'Comments not found'
@@ -240,15 +238,16 @@ router.get('/comments', (req, res) => {
         }
         res.status(200).json({
             success: 1,
-            data: comment
-        })
-    }).catch(error => {
+            data: comments
+        });
+    } catch (error) {
         res.status(500).json({
             success: 0,
             message: 'Internal server error'
         });
-    })
-})
+    }
+});
+
 
 
 module.exports = router
