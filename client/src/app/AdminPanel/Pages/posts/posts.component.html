@@ -54,7 +54,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                     <!-- Edit and Delete buttons -->
-                    <button class="text-indigo-600 hover:text-indigo-900 mr-2">
+                    <button class="text-indigo-600 hover:text-indigo-900 mr-2" [routerLink]="'/admin/post/details/' + post?._id" >
                         <i class="fa fa-edit text-lg"></i>
                     </button>
                     <button class="text-red-600 hover:text-red-900" (click)="deletePost(post?._id)">

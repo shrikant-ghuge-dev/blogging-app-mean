@@ -16,6 +16,7 @@ export class AdminHomeComponent {
   isSidePanelOpen: boolean = true;
   postCount = 0;
   userCount = 0;
+  commentCount = 0;
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
@@ -52,9 +53,9 @@ export class AdminHomeComponent {
       // Update pie chart datasets
       this.pieChartDatasets[0].data = [this.activeUserCount, this.inactiveUserCount];
     })
-    // this.adminService.getAllComments().subscribe(comment => {
-    //   console.log(comment)
-    // })
+    this.adminService.getAllComments().subscribe((comment: any) => {
+      this.commentCount = comment.data.length;
+    })
   }
 
 

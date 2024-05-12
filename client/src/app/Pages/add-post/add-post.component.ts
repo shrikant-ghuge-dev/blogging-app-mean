@@ -42,8 +42,8 @@ export class AddPostComponent {
   constructor(private fb: FormBuilder, private catService: CategoryService, private userService: UserService,
     private postService: PostService, private toastr: ToastrService, private route: ActivatedRoute) {
     this.addPostForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      content: ['', [Validators.required, Validators.minLength(50)]],
       categoryName: ['', Validators.required],
     });
 

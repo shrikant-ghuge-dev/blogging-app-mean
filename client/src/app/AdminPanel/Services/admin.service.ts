@@ -32,6 +32,10 @@ export class AdminService {
     return this.http.get(`${environment.baseUrl}/api/v1/admin/post?searchTerm=${searchTxt}&catId=${catId}`);
   }
 
+  getPostDetails(postId: any): Observable<any> {
+    return this.http.get(`${environment.baseUrl}/api/v1/admin/post/${postId}`);
+  }
+
   // Users
   getAllUsers() {
     return this.http.get(`${environment.baseUrl}/api/v1/admin/users`);
@@ -51,6 +55,10 @@ export class AdminService {
 
   // Comments
   getAllComments() {
-    return this.http.get(`${environment.baseUrl}/api/v1/admin/comments`);
+    return this.http.get(`${environment.baseUrl}/api/v1/admin/comment`);
+  }
+
+  deleteComment(commentId:any) {
+    return this.http.delete(`${environment.baseUrl}/api/v1/admin/comment/${commentId}`);
   }
 }

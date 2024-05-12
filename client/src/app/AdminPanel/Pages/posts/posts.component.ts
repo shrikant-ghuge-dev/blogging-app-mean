@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopupComponent } from '../../Components/confirmation-popup/confirmation-popup.component';
 import { AdminService } from '../../Services/admin.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CommonModule, ConfirmationPopupComponent],
+  imports: [CommonModule, ConfirmationPopupComponent, RouterModule],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss'
 })

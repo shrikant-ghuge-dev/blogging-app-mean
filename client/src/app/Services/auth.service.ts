@@ -15,6 +15,9 @@ export class AuthService {
   isAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated$: Observable<boolean> = this.isAuthenticated.asObservable();
 
+  userName = new BehaviorSubject<string>("");
+  public userName$: Observable<string> = this.userName.asObservable();
+
   // isAuthenticated$ = this.isAuthenticated.asObservable();
   // private userName: string | null = null;
 
@@ -59,7 +62,6 @@ export class AuthService {
   verifyRoleAndNavigate(token: string): void {
     // Decode JWT token to extract user role
     const decodedToken: any = jwtDecode(token);
-    console.log(decodedToken)
     const role: string = decodedToken.role; // Assuming role is stored in the token
 
     // Redirect based on user role

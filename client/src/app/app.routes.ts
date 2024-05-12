@@ -15,6 +15,7 @@ import { PostsComponent } from './AdminPanel/Pages/posts/posts.component';
 import { CategoriesComponent } from './AdminPanel/Pages/categories/categories.component';
 import { adminGuard } from './Guards/admin.guard';
 import { UserDetailsComponent } from './AdminPanel/Pages/user-details/user-details.component';
+import { AdminPostDetailsComponent } from './AdminPanel/Pages/admin-post-details/admin-post-details.component';
 
 export const routes: Routes = [
     {
@@ -84,6 +85,10 @@ export const routes: Routes = [
             {
                 path: 'user/details',
                 component: UserDetailsComponent,
+            },
+            {
+                path: 'post/details/:id',
+                component: AdminPostDetailsComponent,
             },
         ]
     },

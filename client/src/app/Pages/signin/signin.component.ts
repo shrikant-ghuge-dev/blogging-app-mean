@@ -27,6 +27,7 @@ export class SigninComponent {
     this.authService.signIn(this.signInForm.value).subscribe((res: any) => {
       localStorage.setItem("Token", res.token)
       localStorage.setItem("User", JSON.stringify(res.user))
+      this.authService.userName.next(res.user.name);
       this.authService.checkAuthenticated();
       this.authService.verifyRoleAndNavigate(res.token);
       this.toastr.success(res?.message, "Success");

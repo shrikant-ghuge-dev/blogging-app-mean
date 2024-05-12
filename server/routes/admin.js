@@ -99,8 +99,8 @@ router.get('/users', async (req, res) => {
 
 router.delete('/user/:userId', async (req, res) => {
     try {
-        const deletedUser = await User.deleteOne({ _id: req.params.userId });
-        if (deletedUser.deletedCount === 0) {
+        const deletedComment = await User.deleteOne({ _id: req.params.userId });
+        if (deletedComment.deletedCount === 0) {
             return res.status(404).json({
                 success: false,
                 message: 'User not found'
@@ -110,7 +110,7 @@ router.delete('/user/:userId', async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'User deleted successfully',
-            data: deletedUser
+            data: deletedComment
         });
     } catch (error) {
         res.status(500).json({
@@ -185,6 +185,48 @@ router.get('/post', async (req, res) => {
     }
 });
 
+// post details
+router.get('/post/:postId', (req, res) => {
+    Post.findById(req.params.postId)
+        .populate("userId", "-password")
+        .populate("categoryId")
+        .select('-password')
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({
+                    success: 0,
+                    message: "Post not found."
+                });
+            }
+
+            Comment.find({ postId: req.params.postId }).populate({
+                path: 'userId',
+                select: '-password'
+            })
+                .then(comments => {
+                    return res.status(200).json({
+                        success: 1,
+                        data: {
+                            post: post,
+                            comments: comments
+                        }
+                    });
+                })
+                .catch(commentErr => {
+                    return res.status(500).json({
+                        success: 0,
+                        message: "An error occurred while fetching comments."
+                    });
+                });
+        })
+        .catch(postErr => {
+            return res.status(500).json({
+                success: 0,
+                message: "An error occurred while fetching post."
+            });
+        });
+})
+
 router.put('/user/:userId/status', async (req, res) => {
     const userId = req.params.userId;
     const { active } = req.body;
@@ -227,7 +269,7 @@ router.get('/user/:userId', (req, res) => {
 })
 
 // Comments
-router.get('/comments', async (req, res) => {
+router.get('/comment', async (req, res) => {
     try {
         const comments = await Comment.find({});
         if (comments.length === 0) {
@@ -247,6 +289,30 @@ router.get('/comments', async (req, res) => {
         });
     }
 });
+
+router.delete('/comment/:commentId', async(req, res) => {
+    try {
+        const deletedComment = await Comment.deleteOne({ _id: req.params.commentId });
+        if (deletedComment.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Comment not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Comment deleted successfully',
+            data: deletedComment
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete comment',
+            error: error.message
+        });
+    }
+})
 
 
 

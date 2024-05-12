@@ -29,7 +29,7 @@ export class SignupComponent {
       this.router.navigate(['/signin']);
       this.toastr.info(res?.message, "Success");
     }, error => {
-      this.toastr.info(error?.e, "Error");
+      this.toastr.info(error?.error?.message, "Error");
     })
   }
 

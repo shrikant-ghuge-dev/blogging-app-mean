@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
@@ -9,7 +9,7 @@ import { CommonService } from '../../Services/common.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, NgIf, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   searchText: string = '';
   private authSubscription!: Subscription;
+  userName!:string;
 
   constructor(public authService: AuthService, private router: Router, private commonService: CommonService) {
   }
@@ -30,6 +31,10 @@ export class HeaderComponent implements OnInit {
     this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       this.isLoggedIn = isAuthenticated;
     });
+
+    this.authService.userName$.subscribe(res => {
+      this.userName = res;
+    })
 
     // Check if user is already authenticated on component initialization
     const userDataString = localStorage.getItem('User');

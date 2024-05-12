@@ -43,7 +43,12 @@ export class PostDetailsComponent implements OnInit {
       userId: this.userService.getLoggedInUserId(),
     }
     this.postService.addCommentOnPost(this.postId, payload).subscribe((res: any) => {
-      this.comments.push(payload);
+      this.comments.push({
+        comment: this.userComment,
+        userId: {
+          name: this.userService.getLoggedInUser().name
+        }
+      });
       this.toastr.success(res?.message, "Success");
       this.userComment = '';
     })
