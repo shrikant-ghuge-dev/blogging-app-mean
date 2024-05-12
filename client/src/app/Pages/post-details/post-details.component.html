@@ -41,7 +41,7 @@
                         rows="4" placeholder="Enter comment here" [(ngModel)]="userComment"></textarea>
                 </div>
                 <div class="p-4">
-                    <button (click)="submitComment()"
+                    <button (click)="submitComment()" [disabled]="!userComment"
                         class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">Add
                         Comment</button>
                 </div>

@@ -4,3 +4,8 @@
 @tailwind utilities;
 // regular style toast
 @import 'ngx-toastr/toastr';
+
+
+button:disabled {
+    opacity: .4;
+}
